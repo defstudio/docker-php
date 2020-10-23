@@ -40,6 +40,7 @@ RUN apt-get install -y --no-install-recommends libxext6
 
 
 RUN docker-php-ext-install pdo_mysql
+RUN docker-php-ext-install mysqli
 RUN docker-php-ext-install pcntl
 RUN docker-php-ext-install zip
 RUN docker-php-ext-install soap
