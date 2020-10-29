@@ -1,6 +1,7 @@
 FROM php:7.4-fpm
-ARG ENABLE_XDEBUG
 
+ARG ENABLE_XDEBUG
+ARG ENABLE_LARAVEL_CRON
 
 RUN if [ ${ENABLE_XDEBUG} = 1 ] ; then \
     pecl install xdebug \
