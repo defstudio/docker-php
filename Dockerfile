@@ -1,7 +1,6 @@
 FROM php:7.4-fpm
 
 ARG ENABLE_XDEBUG
-ARG ENABLE_LARAVEL_CRON
 
 RUN if [ ${ENABLE_XDEBUG} = 1 ] ; then \
     pecl install xdebug \
@@ -64,11 +63,3 @@ RUN sed -e 's/;max_input_nesting_level = 64/max_input_nesting_level = 256/' -i "
 RUN sed -e 's/;max_input_vars = 1000/max_input_vars = 10000/' -i "$PHP_INI_DIR/php.ini"
 RUN sed -e 's/post_max_size = 8M/post_max_size = 2G/' -i "$PHP_INI_DIR/php.ini"
 RUN sed -e 's/upload_max_filesize = 2M/upload_max_filesize = 2G/' -i "$PHP_INI_DIR/php.ini"
-
-
-COPY ./laravel-cron /etc/cron.d/laravel-cron
-RUN if [ ${ENABLE_LARAVEL_CRON:-0} = 1 ] ; then \
-   chmod 0644 /etc/cron.d/laravel-cron \
-   && crontab /etc/cron.d/laravel-cron \
-   && echo "cron starting..." ;\
-fi;
