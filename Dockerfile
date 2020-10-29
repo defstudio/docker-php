@@ -69,5 +69,6 @@ RUN sed -e 's/upload_max_filesize = 2M/upload_max_filesize = 2G/' -i "$PHP_INI_D
 COPY ./laravel-cron /etc/cron.d/laravel-cron
 RUN if [ ${ENABLE_LARAVEL_CRON:-0} = 1 ] ; then \
    chmod 0644 /etc/cron.d/laravel-cron \
-   && crontab /etc/cron.d/laravel-cron ;\
+   && crontab /etc/cron.d/laravel-cron \
+   && echo "cron starting..." ;\
 fi;
