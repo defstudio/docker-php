@@ -1,7 +1,6 @@
 FROM php:7.4-fpm
 
-ARG ENABLE_XDEBUG
-
+ARG ENABLE_XDEBUG=0
 RUN if [ ${ENABLE_XDEBUG} = 1 ] ; then \
     pecl install xdebug \
     && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
@@ -38,10 +37,13 @@ RUN apt-get install -y --no-install-recommends libxrender1
 RUN apt-get install -y --no-install-recommends libfontconfig1
 RUN apt-get install -y --no-install-recommends libxext6
 
+
+ARG ENABLE-LIBREOFFICE-WRITER=0
 RUN mkdir -p /usr/share/man/man1
 RUN apt-get update && apt-get install -y --no-install-recommends openjdk-11-jre-headless
 RUN apt-get install -y --no-install-recommends libreoffice-writer
 RUN apt-get install -y --no-install-recommends libreoffice-java-common
+RUN mkdir -p /.cache/dconf && chmod -R 777 /.cache/dconf
 
 
 
@@ -62,7 +64,7 @@ RUN docker-php-ext-configure gd -with-freetype=/usr/include/ --with-jpeg=/usr/in
 RUN docker-php-ext-install gd
 
 RUN mkdir -p /.config/psysh && chmod -R 777 /.config/psysh
-RUN mkdir -p /.cache/dconf && chmod -R 777 /.cache/dconf
+
 
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 RUN sed -e 's/max_execution_time = 30/max_execution_time = 600/' -i "$PHP_INI_DIR/php.ini"
