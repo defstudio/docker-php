@@ -37,7 +37,9 @@ RUN apt-get install -y --no-install-recommends libxml2-dev
 RUN apt-get install -y --no-install-recommends libxrender1
 RUN apt-get install -y --no-install-recommends libfontconfig1
 RUN apt-get install -y --no-install-recommends libxext6
+
 RUN apt-get install -y --no-install-recommends libreoffice-writer
+RUN apt-get install -y --no-install-recommends libreoffice-java-common
 
 
 
