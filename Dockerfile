@@ -38,13 +38,15 @@ RUN apt-get install -y --no-install-recommends libfontconfig1
 RUN apt-get install -y --no-install-recommends libxext6
 
 
-ARG ENABLE-LIBREOFFICE-WRITER=0
-RUN mkdir -p /usr/share/man/man1
-RUN apt-get update && apt-get install -y --no-install-recommends openjdk-11-jre-headless
-RUN apt-get install -y --no-install-recommends libreoffice-writer
-RUN apt-get install -y --no-install-recommends libreoffice-java-common
-RUN mkdir -p /.cache/dconf && chmod -R 777 /.cache/dconf
-
+ARG ENABLE_LIBREOFFICE_WRITER=0
+RUN if [ ${ENABLE_LIBREOFFICE_WRITER} = 1 ] ; then \
+    mkdir -p /usr/share/man/man1 \
+    && mkdir -p /.cache/dconf && chmod -R 777 /.cache/dconf \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends openjdk-11-jre-headless \
+    && apt-get install -y --no-install-recommends libreoffice-writer \
+    && apt-get install -y --no-install-recommends libreoffice-java-common ;\
+fi;
 
 
 RUN docker-php-ext-install pdo_mysql
