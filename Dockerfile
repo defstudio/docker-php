@@ -38,7 +38,7 @@ RUN apt-get install -y --no-install-recommends libxrender1
 RUN apt-get install -y --no-install-recommends libfontconfig1
 RUN apt-get install -y --no-install-recommends libxext6
 
-RUN apt-get install -y --no-install-recommends apt-get update && openjdk-11-jre-headless
+RUN apt-get update && apt-get install -y --no-install-recommends openjdk-11-jre-headless
 RUN apt-get install -y --no-install-recommends libreoffice-writer
 RUN apt-get install -y --no-install-recommends libreoffice-java-common
 
