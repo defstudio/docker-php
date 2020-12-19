@@ -90,7 +90,7 @@ CMD ["/usr/local/bin/start"]
 
 
 
-FROM php as schedule
+FROM php as scheduler
 COPY ./scripts/start_schedule.sh /usr/local/bin/start
 RUN chmod 777 /usr/local/bin/start
 CMD ["/usr/local/bin/start"]
