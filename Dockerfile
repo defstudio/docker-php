@@ -1,18 +1,5 @@
 ARG PHP_VERSION=7.4
-FROM php:${PHP_VERSION}-fpm as php
-
-ARG ENABLE_XDEBUG=0
-RUN if [ ${ENABLE_XDEBUG} = 1 ] ; then \
-    pecl install xdebug \
-    && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.mode=develop" >> /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.client_port=9000" >> /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.start_with_request=yes" >> /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.discover_client_host=1" >> /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.idekey='PHPSTORM'" >> /usr/local/etc/php/conf.d/xdebug.ini \
-    && docker-php-ext-enable xdebug ;\
-fi;
+FROM php:${PHP_VERSION}-fpm as base_php
 
 RUN apt-get update
 RUN apt-get install -y --no-install-recommends curl
@@ -64,7 +51,6 @@ RUN docker-php-ext-install gd
 
 RUN mkdir -p /.config/psysh && chmod -R 777 /.config/psysh
 
-
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 RUN sed -e 's/max_execution_time = 30/max_execution_time = 600/' -i "$PHP_INI_DIR/php.ini"
 RUN sed -e 's/memory_limit = 128M/memory_limit = 2G/' -i "$PHP_INI_DIR/php.ini"
@@ -75,22 +61,39 @@ RUN sed -e 's/upload_max_filesize = 2M/upload_max_filesize = 2G/' -i "$PHP_INI_D
 
 
 
+FROM base_php as php
+ARG ENABLE_XDEBUG=0
+RUN if [ ${ENABLE_XDEBUG} = 1 ] ; then \
+    pecl install xdebug \
+    && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.mode=develop" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.client_port=9000" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.start_with_request=yes" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.discover_client_host=1" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.idekey='PHPSTORM'" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && docker-php-ext-enable xdebug ;\
+fi;
 
-FROM php as websocket
+
+
+
+
+FROM base_php as websocket
 COPY ./scripts/start_websocket.sh /usr/local/bin/start
 RUN chmod 777 /usr/local/bin/start
 CMD ["/usr/local/bin/start"]
 
 
 
-FROM php as worker
+FROM base_php as worker
 COPY ./scripts/start_worker.sh /usr/local/bin/start
 RUN chmod 777 /usr/local/bin/start
 CMD ["/usr/local/bin/start"]
 
 
 
-FROM php as scheduler
+FROM base_php as scheduler
 COPY ./scripts/start_schedule.sh /usr/local/bin/start
 RUN chmod 777 /usr/local/bin/start
 CMD ["/usr/local/bin/start"]
