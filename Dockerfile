@@ -1,4 +1,6 @@
-ARG PHP_VERSION=7.4
+ARG PHP_VERSION
+
+RUN echo 'building php ${PHP_VERSION}'
 FROM php:${PHP_VERSION}-fpm as base_php
 
 RUN apt-get update
