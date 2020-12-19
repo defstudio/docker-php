@@ -1,21 +1,18 @@
-FROM php:7.4-fpm
+ARG PHP_VERSION=7.4
+FROM php:${PHP_VERSION}-fpm as php
 
 ARG ENABLE_XDEBUG=0
 RUN if [ ${ENABLE_XDEBUG} = 1 ] ; then \
     pecl install xdebug \
     && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.default_enable=1" >> /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.remote_handler=dbgp" >> /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.remote_port=9000" >> /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.remote_autostart=1" >> /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.remote_connect_back=1" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.mode=develop" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.mode=debug." >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.client_port=9000" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.start_with_request=yes" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.discover_client_host=1" >> /usr/local/etc/php/conf.d/xdebug.ini \
     && echo "xdebug.idekey='PHPSTORM'" >> /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.profiler_enable_trigger=1" >> /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.profiler_output_dir='/opt/profile'" >> /usr/local/etc/php/conf.d/xdebug.ini \
     && docker-php-ext-enable xdebug ;\
 fi;
-
 
 RUN apt-get update
 RUN apt-get install -y --no-install-recommends curl
@@ -75,3 +72,25 @@ RUN sed -e 's/;max_input_nesting_level = 64/max_input_nesting_level = 256/' -i "
 RUN sed -e 's/;max_input_vars = 1000/max_input_vars = 10000/' -i "$PHP_INI_DIR/php.ini"
 RUN sed -e 's/post_max_size = 8M/post_max_size = 2G/' -i "$PHP_INI_DIR/php.ini"
 RUN sed -e 's/upload_max_filesize = 2M/upload_max_filesize = 2G/' -i "$PHP_INI_DIR/php.ini"
+
+
+
+
+FROM php as websocket
+COPY ./scripts/start_websocket.sh /usr/local/bin/start
+RUN chmod 777 /usr/local/bin/start
+CMD ["/usr/local/bin/start"]
+
+
+
+FROM php as worker
+COPY ./scripts/start_worker.sh /usr/local/bin/start
+RUN chmod 777 /usr/local/bin/start
+CMD ["/usr/local/bin/start"]
+
+
+
+FROM php as schedule
+COPY ./scripts/start_schedule.sh /usr/local/bin/start
+RUN chmod 777 /usr/local/bin/start
+CMD ["/usr/local/bin/start"]
