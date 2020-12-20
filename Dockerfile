@@ -88,7 +88,7 @@ CMD ["/usr/local/bin/start"]
 
 
 
-FROM base_php as worker\
+FROM base_php as worker
 COPY ./scripts/start_worker.sh /usr/local/bin/start
 RUN chmod 777 /usr/local/bin/start
 CMD ["/usr/local/bin/start"]
