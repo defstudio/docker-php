@@ -23,6 +23,6 @@ build:
     - docker push $CI_REGISTRY_IMAGE:$BUILD_VERSION
 
     #BUILD LATEST VERSION
-    - docker build --build-arg PHP_VERSION="$BUILD_VERSION" --target=$BUILD_TARGET --pull -t $CI_REGISTRY_IMAGE:latest
+    - docker build --build-arg PHP_VERSION="$BUILD_VERSION" --target=$BUILD_TARGET --pull -t $CI_REGISTRY_IMAGE:latest .
     - docker push $CI_REGISTRY_IMAGE:latest
 
