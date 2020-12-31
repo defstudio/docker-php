@@ -19,13 +19,12 @@ for BUILD_TARGET in "${targets[@]}"
       TARGET_NAME=""
     fi
 
-    docker build --build-arg PHP_VERSION="$BUILD_VERSION" --target="$BUILD_TARGET" --pull -t "$CI_REGISTRY_IMAGE:$BUILD_VERSION$TARGET_NAME"
-    docker push "$CI_REGISTRY_IMAGE:$BUILD_VERSION$TARGET_NAME"
+    docker build --build-arg PHP_VERSION="$BUILD_VERSION" --target="$BUILD_TARGET" --pull -t "$CI_REGISTRY_IMAGE:$BUILD_VERSION$TARGET_NAME" .
+    docker push "$CI_REGISTRY_IMAGE:$BUILD_VERSION$TARGET_NAME" .
 
-    echo "$BUILD_VERSION$TARGET_NAME"
   done
 
-    docker build --build-arg PHP_VERSION="$BUILD_VERSION" --target="$BUILD_TARGET" --pull -t "$CI_REGISTRY_IMAGE:latest$TARGET_NAME"
-    docker push "$CI_REGISTRY_IMAGE:latest$TARGET_NAME"
+    docker build --build-arg PHP_VERSION="$BUILD_VERSION" --target="$BUILD_TARGET" --pull -t "$CI_REGISTRY_IMAGE:latest$TARGET_NAME" .
+    docker push "$CI_REGISTRY_IMAGE:latest$TARGET_NAME" .
 done
 
