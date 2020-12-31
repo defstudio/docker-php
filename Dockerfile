@@ -109,12 +109,15 @@ RUN mkdir -p /.composer/cache && chmod -R 777 /.composer/cache
 
 
 
-FROM base_php as tester
+FROM composer as tester
 RUN apt-get install -y --no-install-recommends git-core
 RUN apt-get install -y --no-install-recommends curl
 RUN apt-get install -y --no-install-recommends build-essential
 RUN apt-get install -y --no-install-recommends openssl
 RUN apt-get install -y --no-install-recommends libssl-dev
+RUN apt-get install -y --no-install-recommends python
+RUN apt-get install -y --no-install-recommends make
+RUN apt-get install -y --no-install-recommends g++
 RUN git clone https://github.com/nodejs/node.git \
     && cd node \
     && ./configure \
