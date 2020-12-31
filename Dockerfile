@@ -110,16 +110,6 @@ RUN mkdir -p /.composer/cache && chmod -R 777 /.composer/cache
 
 
 FROM composer as tester
-RUN apt-get install -y --no-install-recommends git-core
-RUN apt-get install -y --no-install-recommends curl
-RUN apt-get install -y --no-install-recommends build-essential
-RUN apt-get install -y --no-install-recommends openssl
-RUN apt-get install -y --no-install-recommends libssl-dev
-RUN apt-get install -y --no-install-recommends python
-RUN apt-get install -y --no-install-recommends make
-RUN apt-get install -y --no-install-recommends g++
-RUN git clone https://github.com/nodejs/node.git \
-    && cd node \
-    && ./configure \
-    && make \
-    && sudo make install
+RUN apt-get -y install curl gnupg
+RUN curl -sL https://deb.nodesource.com/setup_14.x  | bash -
+RUN apt-get -y install nodejs
