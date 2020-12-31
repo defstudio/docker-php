@@ -4,8 +4,9 @@ services:
 
 before_script:
   - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-  - apt-get update
-  - apt-get install -y --no-install-recommends bash
+  - apk update
+  - apk upgrade
+  - apk add bash
 
 stages:
   - build
