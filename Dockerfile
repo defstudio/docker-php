@@ -105,3 +105,18 @@ CMD ["/usr/local/bin/start"]
 FROM base_php as composer
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 RUN mkdir -p /.composer/cache && chmod -R 777 /.composer/cache
+
+
+
+
+FROM base_php as tester
+RUN apt-get install -y --no-install-recommends git-core
+RUN apt-get install -y --no-install-recommends curl
+RUN apt-get install -y --no-install-recommends build-essential
+RUN apt-get install -y --no-install-recommends openssl
+RUN apt-get install -y --no-install-recommends libssl-dev
+RUN git clone https://github.com/nodejs/node.git \
+    && cd node \
+    && ./configure \
+    && make \
+    && sudo make install

@@ -9,7 +9,7 @@ before_script:
 stages:
   - build
 
-build:
+build-php:
   stage: build
   script:
     - BUILD_TARGET="php"
@@ -26,3 +26,20 @@ build:
     - docker build --build-arg PHP_VERSION="$BUILD_VERSION" --target=$BUILD_TARGET --pull -t $CI_REGISTRY_IMAGE:latest .
     - docker push $CI_REGISTRY_IMAGE:latest
 
+
+build-tester:
+  stage: build
+  script:
+    - BUILD_TARGET="tester"
+
+    - BUILD_VERSION="7.4"
+    - docker build --build-arg PHP_VERSION="$BUILD_VERSION" --target=$BUILD_TARGET --pull -t $CI_REGISTRY_IMAGE:$BUILD_VERSION-tester .
+    - docker push $CI_REGISTRY_IMAGE:$BUILD_VERSION-tester
+
+    - BUILD_VERSION="8.0"
+    - docker build --build-arg PHP_VERSION="$BUILD_VERSION" --target=$BUILD_TARGET --pull -t $CI_REGISTRY_IMAGE:$BUILD_VERSION-tester .
+    - docker push $CI_REGISTRY_IMAGE:$BUILD_VERSION-tester
+
+    #BUILD LATEST VERSION
+    - docker build --build-arg PHP_VERSION="$BUILD_VERSION" --target=$BUILD_TARGET --pull -t $CI_REGISTRY_IMAGE:latest-tester .
+    - docker push $CI_REGISTRY_IMAGE:latest-tester
