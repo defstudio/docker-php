@@ -28,9 +28,9 @@ ARG ENABLE_LIBREOFFICE_WRITER=0
 RUN if [ ${ENABLE_LIBREOFFICE_WRITER} = 1 ] ; then \
     mkdir -p /usr/share/man/man1 \
     && mkdir -p /.cache/dconf && chmod -R 777 /.cache/dconf \
-    && apk --no-cache add  openjdk11-jre-headless \
+    && apk --no-cache add  openjdk-11-jre-headless \
     && apk --no-cache add  libreoffice-writer \
-    && apk --no-cache add  libreoffice-common ;\
+    && apk --no-cache add  libreoffice-java-common ;\
 fi;
 
 
@@ -67,17 +67,15 @@ RUN sed -e 's/upload_max_filesize = 2M/upload_max_filesize = 2G/' -i "$PHP_INI_D
 FROM base_php as php
 ARG ENABLE_XDEBUG=0
 RUN if [ ${ENABLE_XDEBUG} = 1 ] ; then \
-    apk add --no-cache --update --virtual buildDeps autoconf g++ make \
- && pecl install xdebug \
- && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
- && echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/xdebug.ini \
- && echo "xdebug.client_port=9000" >> /usr/local/etc/php/conf.d/xdebug.ini \
- && echo "xdebug.start_with_request=yes" >> /usr/local/etc/php/conf.d/xdebug.ini \
- && echo "xdebug.discover_client_host=1" >> /usr/local/etc/php/conf.d/xdebug.ini \
- && echo "xdebug.idekey='PHPSTORM'" >> /usr/local/etc/php/conf.d/xdebug.ini \
- && echo "xdebug.log_level=0" >> /usr/local/etc/php/conf.d/xdebug.ini \
- && docker-php-ext-enable xdebug \
- && apk del buildDeps; \
+    pecl install xdebug \
+    && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.client_port=9000" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.start_with_request=yes" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.discover_client_host=1" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.idekey='PHPSTORM'" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.log_level=0" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && docker-php-ext-enable xdebug ;\
 fi;
 
 
