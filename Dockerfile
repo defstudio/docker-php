@@ -1,37 +1,36 @@
 ARG PHP_VERSION
 
-FROM php:${PHP_VERSION}-fpm as base_php
+FROM php:${PHP_VERSION}-fpm-alpine as base_php
 
 
-RUN apt-get update
-RUN apt-get install -y --no-install-recommends curl
-RUN apt-get install -y --no-install-recommends libmemcached-dev
-RUN apt-get install -y --no-install-recommends libz-dev
-RUN apt-get install -y --no-install-recommends libjpeg-dev
-RUN apt-get install -y --no-install-recommends libpng-dev
-RUN apt-get install -y --no-install-recommends libssl-dev
-RUN apt-get install -y --no-install-recommends libmcrypt-dev
-RUN apt-get install -y --no-install-recommends nano
-RUN apt-get install -y --no-install-recommends cron
-RUN apt-get install -y --no-install-recommends git
-RUN apt-get install -y --no-install-recommends unzip
-RUN apt-get install -y --no-install-recommends libzip-dev
-RUN apt-get install -y --no-install-recommends libfreetype6-dev
-RUN apt-get install -y --no-install-recommends libjpeg62-turbo-dev
-RUN apt-get install -y --no-install-recommends libxml2-dev
-RUN apt-get install -y --no-install-recommends libxrender1
-RUN apt-get install -y --no-install-recommends libfontconfig1
-RUN apt-get install -y --no-install-recommends libxext6
+RUN apk update
+RUN apk --no-cache add curl
+RUN apk --no-cache add  libmemcached-dev
+RUN apk --no-cache add  zlib-dev
+RUN apk --no-cache add  jpeg-dev
+RUN apk --no-cache add  libpng-dev
+RUN apk --no-cache add  libressl-dev
+RUN apk --no-cache add  libmcrypt-dev
+RUN apk --no-cache add  nano
+RUN apk --no-cache add  git
+RUN apk --no-cache add  unzip
+RUN apk --no-cache add  libzip-dev
+RUN apk --no-cache add  freetype-dev
+RUN apk --no-cache add  libjpeg-turbo-dev
+RUN apk --no-cache add  libxml2-dev
+RUN apk --no-cache add  libxrender
+RUN apk --no-cache add  fontconfig
+RUN apk --no-cache add  libxext
+RUN apk --no-cache add  bash
 
 
 ARG ENABLE_LIBREOFFICE_WRITER=0
 RUN if [ ${ENABLE_LIBREOFFICE_WRITER} = 1 ] ; then \
     mkdir -p /usr/share/man/man1 \
     && mkdir -p /.cache/dconf && chmod -R 777 /.cache/dconf \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends openjdk-11-jre-headless \
-    && apt-get install -y --no-install-recommends libreoffice-writer \
-    && apt-get install -y --no-install-recommends libreoffice-java-common ;\
+    && apk --no-cache add  openjdk-11-jre-headless \
+    && apk --no-cache add  libreoffice-writer \
+    && apk --no-cache add  libreoffice-java-common ;\
 fi;
 
 
@@ -43,9 +42,11 @@ RUN docker-php-ext-install soap
 RUN docker-php-ext-install exif
 
 
-RUN pecl install -o -f redis \
-&&  rm -rf /tmp/pear \
-&&  docker-php-ext-enable redis
+RUN apk add --no-cache --update --virtual buildDeps autoconf g++ make
+RUN pecl install -o -f redis
+RUN docker-php-ext-enable redis
+RUN apk del buildDeps
+
 
 
 RUN docker-php-ext-configure gd -with-freetype=/usr/include/ --with-jpeg=/usr/include/
@@ -110,6 +111,4 @@ RUN mkdir -p /.composer/cache && chmod -R 777 /.composer/cache
 
 
 FROM composer as tester
-RUN apt-get -y install curl gnupg
-RUN curl -sL https://deb.nodesource.com/setup_14.x  | bash -
-RUN apt-get -y install nodejs
+RUN apk add --no-cache --update npm
