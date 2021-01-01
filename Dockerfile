@@ -1,6 +1,6 @@
 ARG PHP_VERSION
 
-FROM php:${PHP_VERSION}-fpm-alpine as base_php
+FROM php:${PHP_VERSION}-fpm as base_php
 
 
 RUN apt-get update
