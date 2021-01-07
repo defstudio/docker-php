@@ -66,7 +66,7 @@ RUN sed -e 's/pm\.max_children = 5/pm\.max_children = 50/' -i "/usr/local/etc/ph
 
 
 
-FROM base_php as php
+FROM base_php as fpm
 ARG ENABLE_XDEBUG=0
 RUN if [ ${ENABLE_XDEBUG} = 1 ] ; then \
     pecl install pcov \
