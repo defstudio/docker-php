@@ -8,18 +8,25 @@ on:
 
 jobs:
 
-  build:
+  publish:
     runs-on: ubuntu-latest
     
     strategy:
       matrix:
         version: [7.4, 8.0]
-        target: [php, tester]
+        target: [fpm, tester]
     
     steps:
     - uses: actions/checkout@v2
-    - name: Build php${{matrix.version}} target ${{matrix.target}}
-      run: |
-        TARGET="-${{matrix.target}}"
-        [ "$TARGET" == "php" ] && TARGET=""  
-        docker build . --build-arg PHP_VERSION="${{matrix.version}}" --file Dockerfile --target ${{matrix.target}} --tag ${{matrix.version}}$TARGET
+
+    - name: Build and Push php${{matrix.version}}-${{matrix.target}}
+      uses: docker/build-push-action@v2
+      with:
+        push: true
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        registry: docker.pkg.github.com
+        tags: ${{matrix.version}}-${{matrix.target}}
+        targets: ${{matrix.target}}
+        build-args: |
+          PHP_VERSION="${{matrix.version}}"
