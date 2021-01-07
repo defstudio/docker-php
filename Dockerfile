@@ -108,7 +108,7 @@ CMD ["/usr/local/bin/start"]
 
 
 FROM base_php as composer
-COPY --from=composer /usr/bin/composer /usr/bin/composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN mkdir -p /.composer/cache && chmod -R 777 /.composer/cache
 
 
