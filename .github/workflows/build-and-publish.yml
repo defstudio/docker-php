@@ -45,4 +45,4 @@ jobs:
         tags: ${{matrix.version}}-${{matrix.target}}
         target: ${{matrix.target}}
         build-args: 
-          PHP_VERSION="${{matrix.version}}"
+          PHP_VERSION=${{matrix.version}}
