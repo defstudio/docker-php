@@ -37,12 +37,12 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}    
 
     - 
-      name: Build and Push php${{matrix.version}}-${{matrix.target}}
+      name: Build and Push
       uses: docker/build-push-action@v2
       with:
         context: .
         push: true
-        tags: ${{matrix.version}}-${{matrix.target}}
+        tags: def-studio/${{matrix.version}}-${{matrix.target}}
         target: ${{matrix.target}}
         build-args: 
           PHP_VERSION=${{matrix.version}}
