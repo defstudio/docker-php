@@ -1,0 +1,25 @@
+name: php images publish
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+  
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        version: [7.4, 8.0]
+        target: [php, tester]
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build php${{matrix.version}} target ${{matrix.target}}
+      run: |
+        TARGET="-${{matrix.target}}"
+        [ "$TARGET" == "php" ] && TARGET=""  
+        docker build . --build-arg PHP_VERSION="${{matrix.version}}" --file Dockerfile --target ${{matrix.target}} --tag ${{matrix.version}}$TARGET
