@@ -16,7 +16,7 @@ jobs:
     strategy:
       matrix:
         version: [7.4, 8.0]
-        target: [fpm, tester, websocket, worker, scheduler, composer]
+        target: [fpm, tester, websocket, worker, scheduler, composer, backupper]
     
     steps:
     -
