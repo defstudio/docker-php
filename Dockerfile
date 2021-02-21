@@ -38,7 +38,7 @@ fi;
 ARG ENABLE_BACKUP_TOOLS=0
 RUN if [ ${ENABLE_BACKUP_TOOLS} = 1 ] ; then \
     apt-get update \
-    && apt-get install -y --no-install-recommends mysql-client ; \
+    && apt-get install -y --no-install-recommends default-mysql-client ; \
 fi;
 
 
