@@ -35,6 +35,13 @@ RUN if [ ${ENABLE_LIBREOFFICE_WRITER} = 1 ] ; then \
 fi;
 
 
+ARG ENABLE_BACKUP_TOOLS=0
+RUN if [ ${ENABLE_BACKUP_TOOLS} = 1 ] ; then \
+    apt-get update \
+    && apt-get install -y --no-install-recommends mysqldump pg_dump mongodump ; \
+fi;
+
+
 RUN docker-php-ext-install pdo_mysql
 RUN docker-php-ext-install mysqli
 RUN docker-php-ext-install pcntl
@@ -110,11 +117,6 @@ CMD ["/usr/local/bin/start"]
 FROM base_php as composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN mkdir -p /.composer/cache && chmod -R 777 /.composer/cache
-
-
-FROM base_php as backupper
-RUN apt-get update
-RUN apt-get install -y --no-install-recommends mysqldump pg_dump mongodump
 
 
 
