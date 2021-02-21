@@ -112,6 +112,11 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN mkdir -p /.composer/cache && chmod -R 777 /.composer/cache
 
 
+FROM base_php as backupper
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends mysqldump pg_dump mongodump
+
+
 
 
 FROM composer as tester
