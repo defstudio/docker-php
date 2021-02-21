@@ -26,7 +26,7 @@ RUN apt-get install -y --no-install-recommends libxext6
 ARG ENABLE_LIBREOFFICE_WRITER=0
 RUN if [ ${ENABLE_LIBREOFFICE_WRITER} = 1 ] ; then \
     apt-get update \
-    && apt-get install -y --no-install-recommends pandoc ; \
+    && apt-get install -y --no-install-recommends pdflatex pandoc ; \
 fi;
 
 
