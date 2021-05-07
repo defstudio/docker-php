@@ -107,7 +107,7 @@ RUN if [ ${ENABLE_XDEBUG} = 1 ] ; then \
             echo "xdebug.log_level=0" >> /usr/local/etc/php/conf.d/xdebug.ini && \
             docker-php-ext-enable xdebug ;\
          
-        fi;     
+        fi; \     
     fi;
 
 
