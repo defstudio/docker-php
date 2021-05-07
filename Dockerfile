@@ -93,7 +93,7 @@ RUN if [ ${ENABLE_XDEBUG} = 1 ] ; then \
             docker-php-ext-enable xdebug ;\
 
         
-        else
+        else \
             
             pecl install pcov && \
             docker-php-ext-enable pcov && \
