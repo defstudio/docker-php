@@ -78,7 +78,6 @@ FROM base_php as fpm
 ARG ENABLE_XDEBUG=0
 RUN if [ ${ENABLE_XDEBUG} = 1 ] ; then \
         if [ "${PHP_VERSION}" = "7.0.33" ] ; then \
-        
             pecl install xdebug-2.6.0 && \
             echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini && \
             echo "xdebug.default_enable=1" >> /usr/local/etc/php/conf.d/xdebug.ini && \
@@ -91,10 +90,7 @@ RUN if [ ${ENABLE_XDEBUG} = 1 ] ; then \
             echo "xdebug.profiler_enable_trigger=1" >> /usr/local/etc/php/conf.d/xdebug.ini && \
             echo "xdebug.profiler_output_dir='/opt/profile'" >> /usr/local/etc/php/conf.d/xdebug.ini && \
             docker-php-ext-enable xdebug ;\
-
-        
         else \
-            
             pecl install pcov && \
             docker-php-ext-enable pcov && \
             pecl install xdebug && \
@@ -106,7 +102,6 @@ RUN if [ ${ENABLE_XDEBUG} = 1 ] ; then \
             echo "xdebug.idekey='PHPSTORM'" >> /usr/local/etc/php/conf.d/xdebug.ini && \
             echo "xdebug.log_level=0" >> /usr/local/etc/php/conf.d/xdebug.ini && \
             docker-php-ext-enable xdebug ;\
-         
         fi; \     
     fi;
 
