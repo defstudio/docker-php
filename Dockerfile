@@ -2,25 +2,25 @@ ARG PHP_VERSION
 
 FROM php:${PHP_VERSION}-fpm as base_php
 
-RUN apt-get update
-RUN apt-get install -y --no-install-recommends curl
-RUN apt-get install -y --no-install-recommends libmemcached-dev
-RUN apt-get install -y --no-install-recommends libz-dev
-RUN apt-get install -y --no-install-recommends libjpeg-dev
-RUN apt-get install -y --no-install-recommends libpng-dev
-RUN apt-get install -y --no-install-recommends libssl-dev
-RUN apt-get install -y --no-install-recommends libmcrypt-dev
-RUN apt-get install -y --no-install-recommends nano
-RUN apt-get install -y --no-install-recommends cron
-RUN apt-get install -y --no-install-recommends git
-RUN apt-get install -y --no-install-recommends unzip
-RUN apt-get install -y --no-install-recommends libzip-dev
-RUN apt-get install -y --no-install-recommends libfreetype6-dev
-RUN apt-get install -y --no-install-recommends libjpeg62-turbo-dev
-RUN apt-get install -y --no-install-recommends libxml2-dev
-RUN apt-get install -y --no-install-recommends libxrender1
-RUN apt-get install -y --no-install-recommends libfontconfig1
-RUN apt-get install -y --no-install-recommends libxext6
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends curl && \
+    apt-get install -y --no-install-recommends libmemcached-dev && \
+    apt-get install -y --no-install-recommends libz-dev && \
+    apt-get install -y --no-install-recommends libjpeg-dev && \
+    apt-get install -y --no-install-recommends libpng-dev && \
+    apt-get install -y --no-install-recommends libssl-dev && \
+    apt-get install -y --no-install-recommends libmcrypt-dev && \
+    apt-get install -y --no-install-recommends nano && \
+    apt-get install -y --no-install-recommends cron && \
+    apt-get install -y --no-install-recommends git && \
+    apt-get install -y --no-install-recommends unzip && \
+    apt-get install -y --no-install-recommends libzip-dev && \
+    apt-get install -y --no-install-recommends libfreetype6-dev && \
+    apt-get install -y --no-install-recommends libjpeg62-turbo-dev && \
+    apt-get install -y --no-install-recommends libxml2-dev && \
+    apt-get install -y --no-install-recommends libxrender1 && \
+    apt-get install -y --no-install-recommends libfontconfig1 && \
+    apt-get install -y --no-install-recommends libxext6
 
 
 ARG ENABLE_LIBREOFFICE_WRITER=0
@@ -42,21 +42,21 @@ RUN if [ ${ENABLE_BACKUP_TOOLS} = 1 ] ; then \
 fi;
 
 
-RUN docker-php-ext-install pdo_mysql
-RUN docker-php-ext-install mysqli
-RUN docker-php-ext-install pcntl
-RUN docker-php-ext-install zip
-RUN docker-php-ext-install soap
-RUN docker-php-ext-install exif
+RUN docker-php-ext-install pdo_mysql && \
+    docker-php-ext-install mysqli && \
+    docker-php-ext-install pcntl && \
+    docker-php-ext-install zip && \
+    docker-php-ext-install soap && \
+    docker-php-ext-install exif
 
 
-RUN pecl install -o -f redis \
-&&  rm -rf /tmp/pear \
-&&  docker-php-ext-enable redis
+RUN pecl install -o -f redis && \ 
+    rm -rf /tmp/pear && \
+    docker-php-ext-enable redis
 
 
-RUN docker-php-ext-configure gd -with-freetype=/usr/include/ --with-jpeg=/usr/include/
-RUN docker-php-ext-install gd
+RUN docker-php-ext-configure gd -with-freetype=/usr/include/ --with-jpeg=/usr/include/ && \
+    docker-php-ext-install gd
 
 RUN mkdir -p /.config/psysh && chmod -R 777 /.config/psysh
 
@@ -89,7 +89,7 @@ RUN if [ ${PRODUCTION} = 1 ] ; then \
 
 
 FROM base_php as fpm
-
+ARG PRODUCTION=0
 RUN if [ ${PRODUCTION} = 0 ] ; then \
         apt-get install -y --no-install-recommends fswatch ; \
     fi;
