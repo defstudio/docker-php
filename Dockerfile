@@ -91,7 +91,7 @@ RUN if [ ${PRODUCTION} = 1 ] ; then \
 FROM base_php as fpm
 
 RUN if [ ${PRODUCTION} = 0 ] ; then \
-        apt-get install -y --no-install-recommends fswatch
+        apt-get install -y --no-install-recommends fswatch ; \
     fi;
     
     
