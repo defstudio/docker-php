@@ -61,28 +61,16 @@ RUN docker-php-ext-configure gd -with-freetype=/usr/include/ --with-jpeg=/usr/in
 RUN mkdir -p /.config/psysh && chmod -R 777 /.config/psysh
 
 
+COPY php-production.ini "$PHP_INI_DIR/php.ini-production"
+COPY php-development.ini "$PHP_INI_DIR/php.ini-development"
+
 ARG PRODUCTION=0
 RUN if [ ${PRODUCTION} = 1 ] ; then \
-        mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" && \
-        sed -e 's/max_execution_time = 30/max_execution_time = 600/' -i "$PHP_INI_DIR/php.ini" && \
-        sed -e 's/memory_limit = 128M/memory_limit = 2G/' -i "$PHP_INI_DIR/php.ini" && \
-        sed -e 's/;max_input_nesting_level = 64/max_input_nesting_level = 256/' -i "$PHP_INI_DIR/php.ini" && \
-        sed -e 's/;max_input_vars = 1000/max_input_vars = 10000/' -i "$PHP_INI_DIR/php.ini" && \
-        sed -e 's/post_max_size = 8M/post_max_size = 2G/' -i "$PHP_INI_DIR/php.ini" && \
-        sed -e 's/upload_max_filesize = 2M/upload_max_filesize = 2G/' -i "$PHP_INI_DIR/php.ini" && \
-        sed -e 's/max_file_uploads = 20/max_file_uploads = 1000/' -i "$PHP_INI_DIR/php.ini" && \
+        cp "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" && \
         sed -e 's/pm\.max_children = 5/pm\.max_children = 50/' -i "/usr/local/etc/php-fpm.d/www.conf.default" && \
         sed -e 's/pm\.max_children = 5/pm\.max_children = 50/' -i "/usr/local/etc/php-fpm.d/www.conf" ; \
     else \
         mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini" && \
-        sed -e 's/max_execution_time = 30/max_execution_time = 600/' -i "$PHP_INI_DIR/php.ini" && \
-        sed -e 's/error_reporting = E_ALL/error_reporting = E_ALL & ~E_NOTICE/' -i "$PHP_INI_DIR/php.ini" && \
-        sed -e 's/memory_limit = 128M/memory_limit = 2G/' -i "$PHP_INI_DIR/php.ini" && \
-        sed -e 's/;max_input_nesting_level = 64/max_input_nesting_level = 256/' -i "$PHP_INI_DIR/php.ini" && \
-        sed -e 's/;max_input_vars = 1000/max_input_vars = 10000/' -i "$PHP_INI_DIR/php.ini" && \
-        sed -e 's/post_max_size = 8M/post_max_size = 2G/' -i "$PHP_INI_DIR/php.ini" && \
-        sed -e 's/upload_max_filesize = 2M/upload_max_filesize = 2G/' -i "$PHP_INI_DIR/php.ini" && \
-        sed -e 's/max_file_uploads = 20/max_file_uploads = 1000/' -i "$PHP_INI_DIR/php.ini" && \
         sed -e 's/pm\.max_children = 5/pm\.max_children = 50/' -i "/usr/local/etc/php-fpm.d/www.conf.default" && \
         sed -e 's/pm\.max_children = 5/pm\.max_children = 50/' -i "/usr/local/etc/php-fpm.d/www.conf" ; \
     fi;
