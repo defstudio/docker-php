@@ -76,6 +76,7 @@ RUN if [ ${PRODUCTION} = 1 ] ; then \
     else \
         mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini" && \
         sed -e 's/max_execution_time = 30/max_execution_time = 600/' -i "$PHP_INI_DIR/php.ini" && \
+        sed -e 's/error_reporting = E_ALL/error_reporting = E_ALL & ~E_NOTICE/' -i "$PHP_INI_DIR/php.ini" && \
         sed -e 's/memory_limit = 128M/memory_limit = 2G/' -i "$PHP_INI_DIR/php.ini" && \
         sed -e 's/;max_input_nesting_level = 64/max_input_nesting_level = 256/' -i "$PHP_INI_DIR/php.ini" && \
         sed -e 's/;max_input_vars = 1000/max_input_vars = 10000/' -i "$PHP_INI_DIR/php.ini" && \
