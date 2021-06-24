@@ -63,7 +63,7 @@ RUN mkdir -p /.config/psysh && chmod -R 777 /.config/psysh
 
 ARG PRODUCTION=0
 RUN if [ ${PRODUCTION} = 1 ] ; then \
-        mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini" && \
+        mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" && \
         sed -e 's/max_execution_time = 30/max_execution_time = 600/' -i "$PHP_INI_DIR/php.ini" && \
         sed -e 's/memory_limit = 128M/memory_limit = 2G/' -i "$PHP_INI_DIR/php.ini" && \
         sed -e 's/;max_input_nesting_level = 64/max_input_nesting_level = 256/' -i "$PHP_INI_DIR/php.ini" && \
@@ -74,7 +74,7 @@ RUN if [ ${PRODUCTION} = 1 ] ; then \
         sed -e 's/pm\.max_children = 5/pm\.max_children = 50/' -i "/usr/local/etc/php-fpm.d/www.conf.default" && \
         sed -e 's/pm\.max_children = 5/pm\.max_children = 50/' -i "/usr/local/etc/php-fpm.d/www.conf" ; \
     else \
-        mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" && \
+        mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini" && \
         sed -e 's/max_execution_time = 30/max_execution_time = 600/' -i "$PHP_INI_DIR/php.ini" && \
         sed -e 's/memory_limit = 128M/memory_limit = 2G/' -i "$PHP_INI_DIR/php.ini" && \
         sed -e 's/;max_input_nesting_level = 64/max_input_nesting_level = 256/' -i "$PHP_INI_DIR/php.ini" && \
