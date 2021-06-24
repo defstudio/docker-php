@@ -88,12 +88,7 @@ RUN if [ ${PRODUCTION} = 1 ] ; then \
     
 
 
-FROM base_php as fpm
-ARG PRODUCTION=0
-RUN if [ ${PRODUCTION} = 0 ] ; then \
-        apt-get install -y --no-install-recommends fswatch ; \
-    fi;
-    
+FROM base_php as fpm    
     
 ARG ENABLE_XDEBUG=0
 RUN if [ ${ENABLE_XDEBUG} = 1 ] ; then \
