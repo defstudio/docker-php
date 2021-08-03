@@ -56,7 +56,8 @@ RUN pecl install -o -f redis && \
     docker-php-ext-enable redis
 
 RUN if [ "${PHP_VERSION}" = "7.3.29" ] ; then \
-        echo 'gd installation skipped for 7.3'; \
+        docker-php-ext-configure gd -with-freetype=/usr/include/ --with-jpeg=/usr/include/ && \
+        docker-php-ext-install gd ; \
     else \
         docker-php-ext-configure gd -with-freetype=/usr/include/ --with-jpeg=/usr/include/ && \
         docker-php-ext-install gd ; \
