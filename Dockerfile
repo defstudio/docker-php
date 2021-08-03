@@ -55,9 +55,12 @@ RUN pecl install -o -f redis && \
     rm -rf /tmp/pear && \
     docker-php-ext-enable redis
 
-
-RUN docker-php-ext-configure gd -with-freetype=/usr/include/ --with-jpeg=/usr/include/ && \
-    docker-php-ext-install gd
+RUN if [ ${PHP_VERSION} > 7.3 ] ; then \
+           echo 'test fabio' && \
+        docker-php-ext-configure gd -with-freetype=/usr/include/ --with-jpeg=/usr/include/ && \
+        docker-php-ext-install gd ; \
+    fi;
+   
 
 RUN mkdir -p /.config/psysh && chmod -R 777 /.config/psysh
 
