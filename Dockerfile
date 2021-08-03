@@ -55,8 +55,8 @@ RUN pecl install -o -f redis && \
     rm -rf /tmp/pear && \
     docker-php-ext-enable redis
 
-RUN if [ ${PHP_VERSION} > 7.3 ] ; then \
-           echo 'test fabio' && \
+RUN if [ ${PHP_VERSION} -eq "7.3" ] ; then \
+    else \
         docker-php-ext-configure gd -with-freetype=/usr/include/ --with-jpeg=/usr/include/ && \
         docker-php-ext-install gd ; \
     fi;
