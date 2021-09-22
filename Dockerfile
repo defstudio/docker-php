@@ -21,7 +21,8 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends libxml2-dev && \
     apt-get install -y --no-install-recommends libxrender1 && \
     apt-get install -y --no-install-recommends libfontconfig1 && \
-    apt-get install -y --no-install-recommends libxext6
+    apt-get install -y --no-install-recommends libxext6 && \
+    apt-get install -y --no-install-recommends libnss3    
 
 
 ARG ENABLE_LIBREOFFICE_WRITER=0
