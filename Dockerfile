@@ -147,7 +147,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN mkdir -p /.composer/cache && chmod -R 777 /.composer/cache
 
 RUN  pecl install pcov && \
-     docker-php-ext-enable pcov;\
+     docker-php-ext-enable pcov
 
 
 
