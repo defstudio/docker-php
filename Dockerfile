@@ -112,7 +112,8 @@ RUN if [ ${ENABLE_XDEBUG} = 1 ] ; then \
             echo "xdebug.start_with_request=yes" >> /usr/local/etc/php/conf.d/xdebug.ini && \
             echo "xdebug.discover_client_host=1" >> /usr/local/etc/php/conf.d/xdebug.ini && \
             echo "xdebug.idekey='PHPSTORM'" >> /usr/local/etc/php/conf.d/xdebug.ini && \
-            echo "xdebug.log_level=0" >> /usr/local/etc/php/conf.d/xdebug.ini && \
+            echo "xdebug.log='/var/log/xdebug.log'" >> /usr/local/etc/php/conf.d/xdebug.ini && \
+            echo "xdebug.log_level=7" >> /usr/local/etc/php/conf.d/xdebug.ini && \
             docker-php-ext-enable xdebug ;\
         fi; \     
     fi;
