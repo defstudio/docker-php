@@ -107,13 +107,12 @@ RUN if [ ${ENABLE_XDEBUG} = 1 ] ; then \
             docker-php-ext-enable pcov && \
             pecl install xdebug && \
             echo "zend_extension=xdebug" > /usr/local/etc/php/conf.d/xdebug.ini && \
-            echo "xdebug.mode=develop,debug" >> /usr/local/etc/php/conf.d/xdebug.ini && \
+            echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/xdebug.ini && \
             echo "xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/xdebug.ini && \
             echo "xdebug.client_port=9000" >> /usr/local/etc/php/conf.d/xdebug.ini && \
             echo "xdebug.start_with_request=yes" >> /usr/local/etc/php/conf.d/xdebug.ini && \
             echo "xdebug.discover_client_host=1" >> /usr/local/etc/php/conf.d/xdebug.ini && \
             echo "xdebug.idekey='PHPSTORM'" >> /usr/local/etc/php/conf.d/xdebug.ini && \
-            echo "xdebug.log='/var/log/xdebug.log'" >> /usr/local/etc/php/conf.d/xdebug.ini && \
             echo "xdebug.log_level=0" >> /usr/local/etc/php/conf.d/xdebug.ini && \
             docker-php-ext-enable xdebug ;\
         fi; \     
