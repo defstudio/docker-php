@@ -51,7 +51,6 @@ RUN docker-php-ext-install pdo_mysql && \
     docker-php-ext-install zip && \
     docker-php-ext-install soap && \
     docker-php-ext-install intl && \
-    docker-php-ext-install ssh2 && \
     docker-php-ext-install exif
 
 
