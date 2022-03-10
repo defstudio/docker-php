@@ -67,7 +67,7 @@ RUN if [ "${PHP_VERSION}" = "7.3.29" ] ; then \
         docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ && \
         docker-php-ext-install gd ; \
     elseif [ "${PHP_VERSION}" = "5.6" ] : then \
-        
+        echo 'no config' ; \
     else \
         docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ && \
         docker-php-ext-install gd ; \
@@ -86,6 +86,7 @@ RUN if [ ${PRODUCTION} = 1 ] ; then \
         sed -e 's/pm\.max_children = 5/pm\.max_children = 50/' -i "/usr/local/etc/php-fpm.d/www.conf.default" && \
         sed -e 's/pm\.max_children = 5/pm\.max_children = 50/' -i "/usr/local/etc/php-fpm.d/www.conf" ; \
     else \
+        echo 'no config' ; \
         #mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini" && \
         #sed -e 's/pm\.max_children = 5/pm\.max_children = 50/' -i "/usr/local/etc/php-fpm.d/www.conf.default" && \
         #sed -e 's/pm\.max_children = 5/pm\.max_children = 50/' -i "/usr/local/etc/php-fpm.d/www.conf" ; \
