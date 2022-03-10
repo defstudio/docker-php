@@ -91,7 +91,7 @@ RUN if [ ${PRODUCTION} = 1 ] ; then \
            mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini" && \
            sed -e 's/pm\.max_children = 5/pm\.max_children = 50/' -i "/usr/local/etc/php-fpm.d/www.conf.default" && \
            sed -e 's/pm\.max_children = 5/pm\.max_children = 50/' -i "/usr/local/etc/php-fpm.d/www.conf" ; \
-        fi;
+        fi; \
     fi;
     
 
