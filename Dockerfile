@@ -54,14 +54,20 @@ RUN docker-php-ext-install pdo_mysql && \
     docker-php-ext-install intl && \
     docker-php-ext-install exif
 
-
-RUN pecl install -o -f redis && \ 
-    rm -rf /tmp/pear && \
-    docker-php-ext-enable redis
+RUN if [ "${PHP_VERSION}" = "5.6" ] ; then \
+        pecl install -o -f redis && \ 
+        rm -rf /tmp/pear && \
+        docker-php-ext-enable redis ; \
+    else \
+        docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ && \
+        docker-php-ext-install gd ; \
+    fi;
 
 RUN if [ "${PHP_VERSION}" = "7.3.29" ] ; then \
         docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ && \
         docker-php-ext-install gd ; \
+    elseif [ "${PHP_VERSION}" = "5.6" ] : then \
+        
     else \
         docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ && \
         docker-php-ext-install gd ; \
@@ -93,6 +99,19 @@ ARG ENABLE_XDEBUG=0
 RUN if [ ${ENABLE_XDEBUG} = 1 ] ; then \
         if [ "${PHP_VERSION}" = "7.0.33" ] ; then \
             pecl install xdebug-2.6.0 && \
+            echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini && \
+            echo "xdebug.default_enable=1" >> /usr/local/etc/php/conf.d/xdebug.ini && \
+            echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/xdebug.ini && \
+            echo "xdebug.remote_handler=dbgp" >> /usr/local/etc/php/conf.d/xdebug.ini && \
+            echo "xdebug.remote_port=9000" >> /usr/local/etc/php/conf.d/xdebug.ini && \
+            echo "xdebug.remote_autostart=1" >> /usr/local/etc/php/conf.d/xdebug.ini && \
+            echo "xdebug.remote_connect_back=1" >> /usr/local/etc/php/conf.d/xdebug.ini && \
+            echo "xdebug.idekey='PHPSTORM'" >> /usr/local/etc/php/conf.d/xdebug.ini && \
+            echo "xdebug.profiler_enable_trigger=1" >> /usr/local/etc/php/conf.d/xdebug.ini && \
+            echo "xdebug.profiler_output_dir='/opt/profile'" >> /usr/local/etc/php/conf.d/xdebug.ini && \
+            docker-php-ext-enable xdebug ;\
+        elseif [ "${PHP_VERSION}" = "5.6" ] \
+            pecl install xdebug-2.5.0 && \
             echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini && \
             echo "xdebug.default_enable=1" >> /usr/local/etc/php/conf.d/xdebug.ini && \
             echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/xdebug.ini && \
