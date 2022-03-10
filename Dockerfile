@@ -95,7 +95,7 @@ RUN if [ ${PRODUCTION} = 1 ] ; then \
 
 
 FROM base_php as fpm    
-    
+    RUN echo ${PHP_VERSION}
 ARG ENABLE_XDEBUG=0
 RUN if [ ${ENABLE_XDEBUG} = 1 ] ; then \
         if [ "${PHP_VERSION}" = "7.0.33" ] ; then \
