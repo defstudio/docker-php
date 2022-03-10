@@ -61,7 +61,7 @@ RUN if [ "${PHP_VERSION}" = "5.6.40" ] ; then \
         rm -rf /tmp/pear && \
         docker-php-ext-enable redis ; \
     fi;
-RUN echo "${PHP_VERSION}"
+
 RUN if [ "${PHP_VERSION}" = "7.3.29" ] ; then \
         docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ && \
         docker-php-ext-install gd ; \
@@ -113,7 +113,7 @@ RUN if [ ${ENABLE_XDEBUG} = 1 ] ; then \
             echo "xdebug.profiler_enable_trigger=1" >> /usr/local/etc/php/conf.d/xdebug.ini && \
             echo "xdebug.profiler_output_dir='/opt/profile'" >> /usr/local/etc/php/conf.d/xdebug.ini && \
             docker-php-ext-enable xdebug ;\
-        elseif [ "${PHP_VERSION}" = "5.6.40" ] \
+        elseif [ "${PHP_VERSION}" = "5.6.40" ] : then \
             pecl install xdebug-2.5.0 && \
             echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini && \
             echo "xdebug.default_enable=1" >> /usr/local/etc/php/conf.d/xdebug.ini && \
