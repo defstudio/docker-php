@@ -86,7 +86,8 @@ RUN if [ ${PRODUCTION} = 1 ] ; then \
         sed -e 's/pm\.max_children = 5/pm\.max_children = 50/' -i "/usr/local/etc/php-fpm.d/www.conf" ; \
     else \
         if [ "${PHP_VERSION}" = "5.6.40" ] ; then \
-            mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini" ; \
+            mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini" \
+            echo "date.timezone = 'Europe/Rome'" >> "$PHP_INI_DIR/php.ini" ; \
         else \
            mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini" && \
            sed -e 's/pm\.max_children = 5/pm\.max_children = 50/' -i "/usr/local/etc/php-fpm.d/www.conf.default" && \
