@@ -175,10 +175,7 @@ CMD ["/usr/local/bin/start"]
 FROM base_php as composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN mkdir -p /.composer/cache && chmod -R 777 /.composer/cache
-
-RUN pecl install pcov && \
-    docker-php-ext-enable pcov ; \ 
-
+RUN pecl install pcov && docker-php-ext-enable pcov ;
 
 
 FROM composer as tester
