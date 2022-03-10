@@ -86,7 +86,7 @@ RUN if [ ${PRODUCTION} = 1 ] ; then \
         sed -e 's/pm\.max_children = 5/pm\.max_children = 50/' -i "/usr/local/etc/php-fpm.d/www.conf" ; \
     else \
         if [ "${PHP_VERSION}" = "5.6.40" ] ; then \
-            echo 'no config' ; \
+            mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini" ; \
         else \
            mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini" && \
            sed -e 's/pm\.max_children = 5/pm\.max_children = 50/' -i "/usr/local/etc/php-fpm.d/www.conf.default" && \
@@ -171,8 +171,12 @@ FROM base_php as composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN mkdir -p /.composer/cache && chmod -R 777 /.composer/cache
 
-RUN  pecl install pcov && \
-     docker-php-ext-enable pcov
+RUN if [ "${PHP_VERSION}" = "5.6.40" ] ; then \
+        echo 'no config' ; \
+    else \
+        pecl install pcov && \
+        docker-php-ext-enable pcov ; \ 
+    fi;
 
 
 
