@@ -55,12 +55,11 @@ RUN docker-php-ext-install pdo_mysql && \
     docker-php-ext-install exif
 
 RUN if [ "${PHP_VERSION}" = "5.6.40" ] ; then \
+        echo 'no config' ; \
+    else \
         pecl install -o -f redis && \ 
         rm -rf /tmp/pear && \
         docker-php-ext-enable redis ; \
-    else \
-        docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ && \
-        docker-php-ext-install gd ; \
     fi;
 
 RUN if [ "${PHP_VERSION}" = "7.3.29" ] ; then \
