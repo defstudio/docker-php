@@ -52,6 +52,7 @@ RUN docker-php-ext-install pdo_mysql && \
     docker-php-ext-install zip && \
     docker-php-ext-install soap && \
     docker-php-ext-install intl && \
+    docker-php-ext-install gettext && \
     docker-php-ext-install exif
 
 RUN if [ "${PHP_VERSION}" = "5.6.40" ] ; then \
