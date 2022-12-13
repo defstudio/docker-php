@@ -23,7 +23,8 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends libfontconfig1 && \
     apt-get install -y --no-install-recommends libxext6 && \
     apt-get install -y --no-install-recommends sqlite3 && \
-    apt-get install -y --no-install-recommends ca-certificates && \
+    apt-get install -y --no-install-recommends ca-certificates && \\
+    apt-get install -y --no-install-recommends lsb-release && \
     apt-get install -y --no-install-recommends libnss3    
 
 
