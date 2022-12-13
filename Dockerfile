@@ -40,9 +40,9 @@ fi;
 
 
 ARG ENABLE_BACKUP_TOOLS=0
+COPY mysql-apt-config_0.8.24-1_all.deb
 RUN if [ ${ENABLE_BACKUP_TOOLS} = 1 ] ; then \
-    curl -o mysql-apt-config.deb https://dev.mysql.com/downloads/file/?id=515363 && \
-    dpkg -i mysql-apt-config.deb && \
+    dpkg -i mysql-apt-config_0.8.24-1_all.deb && \
     apt-get update && \
     apt-get install -y --no-install-recommends mysql-client && \
     mysqldump -V; \
