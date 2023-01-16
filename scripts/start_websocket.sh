@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-php /var/www/artisan websockets:serve
+php /var/www/artisan websockets:serve --debug
