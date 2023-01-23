@@ -44,6 +44,8 @@ fi;
 ARG ENABLE_BACKUP_TOOLS=0
 
 RUN if [ ${ENABLE_BACKUP_TOOLS} = 1 ] ; then \
+    apt-get update && \
+    apt-get install -y --no-install-recommends gnupg && \
     wget -O mysql-apt-config.deb  https://dev.mysql.com/get/mysql-apt-config_0.8.24-1_all.deb && \
     DEBIAN_FRONTEND=noninteractive dpkg -i mysql-apt-config.deb && \
     apt-get update && \
