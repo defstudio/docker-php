@@ -139,6 +139,17 @@ RUN if [ ${ENABLE_XDEBUG} = 1 ] ; then \
             echo "xdebug.profiler_enable_trigger=1" >> /usr/local/etc/php/conf.d/xdebug.ini && \
             echo "xdebug.profiler_output_dir='/opt/profile'" >> /usr/local/etc/php/conf.d/xdebug.ini && \
             docker-php-ext-enable xdebug ;\
+        elif [ "${PHP_VERSION}" = "7.4.30" ] ; then \
+            pecl install xdebug-3.1.0 && \
+            echo "zend_extension=xdebug" > /usr/local/etc/php/conf.d/xdebug.ini && \
+            echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/xdebug.ini && \
+            echo "xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/xdebug.ini && \
+            echo "xdebug.client_port=9000" >> /usr/local/etc/php/conf.d/xdebug.ini && \
+            echo "xdebug.start_with_request=yes" >> /usr/local/etc/php/conf.d/xdebug.ini && \
+            echo "xdebug.discover_client_host=1" >> /usr/local/etc/php/conf.d/xdebug.ini && \
+            echo "xdebug.idekey='PHPSTORM'" >> /usr/local/etc/php/conf.d/xdebug.ini && \
+            echo "xdebug.log_level=0" >> /usr/local/etc/php/conf.d/xdebug.ini && \
+            docker-php-ext-enable xdebug ;\
         else \
             pecl install pcov && \
             docker-php-ext-enable pcov && \
