@@ -29,6 +29,8 @@ RUN apt-get update && \
 
 RUN if [ "${PHP_VERSION}" = "7.2.14" ] ; then \
         echo 'no config' ; \
+    elif [ "${PHP_VERSION}" = "7.0.33" ] ; then \
+        echo 'no config' ; \
     else \
         apt-get install -y --no-install-recommends ca-certificates; \
     fi;
