@@ -3,6 +3,7 @@ ARG PHP_VERSION
 FROM php:${PHP_VERSION}-fpm as base_php
 
 RUN apt-get update && \
+    apt-get install -y --no-install-recommends software-properties-common && \
     apt-get install -y --no-install-recommends curl && \
     apt-get install -y --no-install-recommends wget && \
     apt-get install -y --no-install-recommends iputils-ping && \
