@@ -45,7 +45,7 @@ RUN if [ ${ENABLE_LIBREOFFICE_WRITER} = 1 ] ; then \
     && apt-get install -y --no-install-recommends software-properties-common \
     && add-apt-repository ppa:openjdk-r/ppa \
     && apt-get update \
-    && apt-get install -y --no-install-recommends openjdk-11-jre-headless \
+    && apt-get install -y --no-install-recommends openjdk-11-jre \
     && apt-get install -y --no-install-recommends libreoffice-writer \
     && apt-get install -y --no-install-recommends libreoffice-java-common \
     && apt-get install -y --no-install-recommends pandoc ; \
