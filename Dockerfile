@@ -2,37 +2,37 @@ ARG PHP_VERSION
 
 FROM php:${PHP_VERSION}-fpm as base_php
 
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends curl && \
-    apt-get install -y --no-install-recommends wget && \
-    apt-get install -y --no-install-recommends iputils-ping && \
-    apt-get install -y --no-install-recommends libmemcached-dev && \
-    apt-get install -y --no-install-recommends libz-dev && \
-    apt-get install -y --no-install-recommends libjpeg-dev && \
-    apt-get install -y --no-install-recommends libpng-dev && \
-    apt-get install -y --no-install-recommends libssl-dev && \
-    apt-get install -y --no-install-recommends libmcrypt-dev && \
-    apt-get install -y --no-install-recommends nano && \
-    apt-get install -y --no-install-recommends cron && \
-    apt-get install -y --no-install-recommends git && \
-    apt-get install -y --no-install-recommends unzip && \
-    apt-get install -y --no-install-recommends libzip-dev && \
-    apt-get install -y --no-install-recommends libfreetype6-dev && \
-    apt-get install -y --no-install-recommends libjpeg62-turbo-dev && \
-    apt-get install -y --no-install-recommends libxml2-dev && \
-    apt-get install -y --no-install-recommends libxrender1 && \
-    apt-get install -y --no-install-recommends libfontconfig1 && \
-    apt-get install -y --no-install-recommends libxext6 && \
-    apt-get install -y --no-install-recommends sqlite3 && \
-    apt-get install -y --no-install-recommends lsb-release && \
-    apt-get install -y --no-install-recommends libnss3    
+RUN apt update && \
+    apt install -y --no-install-recommends curl && \
+    apt install -y --no-install-recommends wget && \
+    apt install -y --no-install-recommends iputils-ping && \
+    apt install -y --no-install-recommends libmemcached-dev && \
+    apt install -y --no-install-recommends libz-dev && \
+    apt install -y --no-install-recommends libjpeg-dev && \
+    apt install -y --no-install-recommends libpng-dev && \
+    apt install -y --no-install-recommends libssl-dev && \
+    apt install -y --no-install-recommends libmcrypt-dev && \
+    apt install -y --no-install-recommends nano && \
+    apt install -y --no-install-recommends cron && \
+    apt install -y --no-install-recommends git && \
+    apt install -y --no-install-recommends unzip && \
+    apt install -y --no-install-recommends libzip-dev && \
+    apt install -y --no-install-recommends libfreetype6-dev && \
+    apt install -y --no-install-recommends libjpeg62-turbo-dev && \
+    apt install -y --no-install-recommends libxml2-dev && \
+    apt install -y --no-install-recommends libxrender1 && \
+    apt install -y --no-install-recommends libfontconfig1 && \
+    apt install -y --no-install-recommends libxext6 && \
+    apt install -y --no-install-recommends sqlite3 && \
+    apt install -y --no-install-recommends lsb-release && \
+    apt install -y --no-install-recommends libnss3    
 
 RUN if [ "${PHP_VERSION}" = "7.2.14" ] ; then \
         echo 'no config' ; \
     elif [ "${PHP_VERSION}" = "7.0.33" ] ; then \
         echo 'no config' ; \
     else \
-        apt-get install -y --no-install-recommends ca-certificates; \
+        apt install -y --no-install-recommends ca-certificates; \
     fi;
 
 
@@ -40,23 +40,23 @@ ARG ENABLE_LIBREOFFICE_WRITER=0
 RUN if [ ${ENABLE_LIBREOFFICE_WRITER} = 1 ] ; then \
     mkdir -p /usr/share/man/man1 \
     && mkdir -p /.cache/dconf && chmod -R 777 /.cache/dconf \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends openjdk-11-jre \
-    && apt-get install -y --no-install-recommends libreoffice-writer \
-    && apt-get install -y --no-install-recommends libreoffice-java-common \
-    && apt-get install -y --no-install-recommends pandoc ; \
+    && apt update \
+    && apt install -y --no-install-recommends openjdk-11-jre \
+    && apt install -y --no-install-recommends libreoffice-writer \
+    && apt install -y --no-install-recommends libreoffice-java-common \
+    && apt install -y --no-install-recommends pandoc ; \
 fi;
 
 
 ARG ENABLE_BACKUP_TOOLS=0
 
 RUN if [ ${ENABLE_BACKUP_TOOLS} = 1 ] ; then \
-    apt-get update && \
-    apt-get install -y --no-install-recommends gnupg && \
+    apt update && \
+    apt install -y --no-install-recommends gnupg && \
     wget -O mysql-apt-config.deb  https://dev.mysql.com/get/mysql-apt-config_0.8.24-1_all.deb && \
     DEBIAN_FRONTEND=noninteractive dpkg -i mysql-apt-config.deb && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends mysql-client; \
+    apt update && \
+    apt install -y --no-install-recommends mysql-client; \
 fi;
 
 
@@ -219,6 +219,6 @@ RUN pecl install pcov && docker-php-ext-enable pcov ;
 
 
 FROM composer as tester
-RUN apt-get -y install curl gnupg
+RUN apt -y install curl gnupg
 RUN curl -sL https://deb.nodesource.com/setup_14.x  | bash -
-RUN apt-get -y install nodejs
+RUN apt -y install nodejs
