@@ -3,7 +3,9 @@ ARG PHP_VERSION
 FROM php:${PHP_VERSION}-fpm as base_php
 
 RUN rm -fr /var/lib/apt/lists && \
+    rm -fr /var/lib/apt/archives && \
     mkdir -pv /var/lib/apt/lists/partial && \
+    mkdir -pv /var/lib/apt/archives && \
     apt update && \
     apt install -y --no-install-recommends curl && \
     apt install -y --no-install-recommends wget && \
