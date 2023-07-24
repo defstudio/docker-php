@@ -2,7 +2,9 @@ ARG PHP_VERSION
 
 FROM php:${PHP_VERSION}-fpm as base_php
 
-RUN apt update && \
+RUN rm -fr /var/lib/apt/lists && \
+    mkdir -pv /var/lib/apt/lists/partial && \
+    apt update && \
     apt install -y --no-install-recommends curl && \
     apt install -y --no-install-recommends wget && \
     apt install -y --no-install-recommends iputils-ping && \
