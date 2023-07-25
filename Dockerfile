@@ -3,30 +3,29 @@ ARG PHP_VERSION
 FROM php:${PHP_VERSION}-fpm as base_php
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends && \
-    curl && \
-    wget && \
-    iputils-ping && \
-    libmemcached-dev && \
-    libz-dev && \
-    libjpeg-dev && \
-    libpng-dev && \
-    libssl-dev && \
-    libmcrypt-dev && \
-    nano && \
-    cron && \
-    git && \
-    unzip && \
-    libzip-dev && \
-    libfreetype6-dev && \
-    libjpeg62-turbo-dev && \
-    libxml2-dev && \
-    libxrender1 && \
-    libfontconfig1 && \
-    libxext6 && \
-    sqlite3 && \
-    lsb-release && \
-    libnss3    
+    apt-get install -y --no-install-recommends curl && \
+    apt-get install -y --no-install-recommends wget && \
+    apt-get install -y --no-install-recommends iputils-ping && \
+    apt-get install -y --no-install-recommends libmemcached-dev && \
+    apt-get install -y --no-install-recommends libz-dev && \
+    apt-get install -y --no-install-recommends libjpeg-dev && \
+    apt-get install -y --no-install-recommends libpng-dev && \
+    apt-get install -y --no-install-recommends libssl-dev && \
+    apt-get install -y --no-install-recommends libmcrypt-dev && \
+    apt-get install -y --no-install-recommends nano && \
+    apt-get install -y --no-install-recommends cron && \
+    apt-get install -y --no-install-recommends git && \
+    apt-get install -y --no-install-recommends unzip && \
+    apt-get install -y --no-install-recommends libzip-dev && \
+    apt-get install -y --no-install-recommends libfreetype6-dev && \
+    apt-get install -y --no-install-recommends libjpeg62-turbo-dev && \
+    apt-get install -y --no-install-recommends libxml2-dev && \
+    apt-get install -y --no-install-recommends libxrender1 && \
+    apt-get install -y --no-install-recommends libfontconfig1 && \
+    apt-get install -y --no-install-recommends libxext6 && \
+    apt-get install -y --no-install-recommends sqlite3 && \
+    apt-get install -y --no-install-recommends lsb-release && \
+    apt-get install -y --no-install-recommends libnss3      
 
 RUN if [ "${PHP_VERSION}" = "7.2.14" ] ; then \
         echo 'no config' ; \
