@@ -2,8 +2,8 @@ ARG PHP_VERSION
 
 FROM php:${PHP_VERSION}-fpm as base_php
 
-RUN apt update && \
-    apt install -y --no-install-recommends && \
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends && \
     curl && \
     wget && \
     iputils-ping && \
