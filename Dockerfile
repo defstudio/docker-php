@@ -2,34 +2,31 @@ ARG PHP_VERSION
 
 FROM php:${PHP_VERSION}-fpm as base_php
 
-RUN rm -fr /var/lib/apt/lists && \
-    rm -fr /var/lib/apt/archives && \
-    mkdir -pv /var/lib/apt/lists/partial && \
-    mkdir -pv /var/lib/apt/archives && \
-    apt update && \
-    apt install -y --no-install-recommends curl && \
-    apt install -y --no-install-recommends wget && \
-    apt install -y --no-install-recommends iputils-ping && \
-    apt install -y --no-install-recommends libmemcached-dev && \
-    apt install -y --no-install-recommends libz-dev && \
-    apt install -y --no-install-recommends libjpeg-dev && \
-    apt install -y --no-install-recommends libpng-dev && \
-    apt install -y --no-install-recommends libssl-dev && \
-    apt install -y --no-install-recommends libmcrypt-dev && \
-    apt install -y --no-install-recommends nano && \
-    apt install -y --no-install-recommends cron && \
-    apt install -y --no-install-recommends git && \
-    apt install -y --no-install-recommends unzip && \
-    apt install -y --no-install-recommends libzip-dev && \
-    apt install -y --no-install-recommends libfreetype6-dev && \
-    apt install -y --no-install-recommends libjpeg62-turbo-dev && \
-    apt install -y --no-install-recommends libxml2-dev && \
-    apt install -y --no-install-recommends libxrender1 && \
-    apt install -y --no-install-recommends libfontconfig1 && \
-    apt install -y --no-install-recommends libxext6 && \
-    apt install -y --no-install-recommends sqlite3 && \
-    apt install -y --no-install-recommends lsb-release && \
-    apt install -y --no-install-recommends libnss3    
+RUN apt update && \
+    apt install -y --no-install-recommends && \
+    curl && \
+    wget && \
+    iputils-ping && \
+    libmemcached-dev && \
+    libz-dev && \
+    libjpeg-dev && \
+    libpng-dev && \
+    libssl-dev && \
+    libmcrypt-dev && \
+    nano && \
+    cron && \
+    git && \
+    unzip && \
+    libzip-dev && \
+    libfreetype6-dev && \
+    libjpeg62-turbo-dev && \
+    libxml2-dev && \
+    libxrender1 && \
+    libfontconfig1 && \
+    libxext6 && \
+    sqlite3 && \
+    lsb-release && \
+    libnss3    
 
 RUN if [ "${PHP_VERSION}" = "7.2.14" ] ; then \
         echo 'no config' ; \
