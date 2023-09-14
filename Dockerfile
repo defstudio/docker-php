@@ -10,6 +10,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends libz-dev && \
     apt-get install -y --no-install-recommends libjpeg-dev && \
     apt-get install -y --no-install-recommends libpng-dev && \
+    apt-get install -y --no-install-recommends libwebp-dev && \
     apt-get install -y --no-install-recommends libssl-dev && \
     apt-get install -y --no-install-recommends libmcrypt-dev && \
     apt-get install -y --no-install-recommends nano && \
@@ -87,7 +88,7 @@ RUN if [ "${PHP_VERSION}" = "7.3.29" ] ; then \
         docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ && \
         docker-php-ext-install gd ; \
     else \
-        docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ && \
+        docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ --with-webp=/usr/include/ && \
         docker-php-ext-install gd ; \
     fi;
    
