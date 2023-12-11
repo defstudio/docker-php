@@ -208,6 +208,14 @@ CMD ["/usr/local/bin/start"]
 
 
 
+
+FROM base_php as pulse
+COPY ./scripts/start_pulse.sh /usr/local/bin/start
+RUN chmod 777 /usr/local/bin/start
+CMD ["/usr/local/bin/start"]
+
+
+
 FROM base_php as scheduler
 COPY ./scripts/start_schedule.sh /usr/local/bin/start
 RUN chmod 777 /usr/local/bin/start
