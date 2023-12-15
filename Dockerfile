@@ -7,8 +7,6 @@ ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS="0" \
     PHP_OPCACHE_MEMORY_CONSUMPTION="512" \
     PHP_OPCACHE_MAX_WASTED_PERCENTAGE="10" 
 
-RUN apt-key list
-
 RUN apt-get update && \
     apt-get install -y --no-install-recommends procps && \
     apt-get install -y --no-install-recommends curl && \
@@ -62,7 +60,7 @@ ARG ENABLE_BACKUP_TOOLS=0
 RUN if [ ${ENABLE_BACKUP_TOOLS} = 1 ] ; then \
     apt update && \
     apt install -y --no-install-recommends gnupg && \
-    wget -O mysql-apt-config.deb  https://dev.mysql.com/get/mysql-apt-config_0.8.24-1_all.deb && \
+    wget -O mysql-apt-config.deb  https://dev.mysql.com/get/mysql-apt-config_0.8.28-1_all.deb && \
     DEBIAN_FRONTEND=noninteractive dpkg -i mysql-apt-config.deb && \
     apt update && \
     apt install -y --no-install-recommends mysql-client; \
