@@ -74,7 +74,7 @@ RUN docker-php-ext-install pdo_mysql && \
     docker-php-ext-install exif 
 
 RUN if [ ${ENABLE_OPCACHE} = 1 ] ; then \
-    docker-php-ext-install opcache \
+    docker-php-ext-install opcache; \
 fi;
 
 RUN if [ "${PHP_VERSION}" = "5.6.40" ] ; then \
