@@ -73,7 +73,7 @@ RUN docker-php-ext-install pdo_mysql && \
     docker-php-ext-install gettext && \
     docker-php-ext-install exif 
 
-RUN echo 'test'
+RUN echo 'test 2'
 
 RUN if [ ${ENABLE_OPCACHE} = 1 ] ; then \
     wget -O /usr/bin/cachetool.phar  https://github.com/gordalina/cachetool/releases/latest/download/cachetool.phar && \
