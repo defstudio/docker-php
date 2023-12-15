@@ -73,7 +73,7 @@ RUN docker-php-ext-install pdo_mysql && \
     docker-php-ext-install gettext && \
     docker-php-ext-install exif 
 
-RUN echo 'test 2'
+RUN echo ${ENABLE_OPCACHE}
 
 RUN if [ ${ENABLE_OPCACHE} = 1 ] ; then \
     echo 'test 3' && \
