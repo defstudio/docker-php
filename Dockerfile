@@ -63,7 +63,7 @@ RUN if [ ${ENABLE_BACKUP_TOOLS} = 1 ] ; then \
     wget -O mysql-apt-config.deb  https://dev.mysql.com/get/mysql-apt-config_0.8.28-1_all.deb && \
     DEBIAN_FRONTEND=noninteractive dpkg -i mysql-apt-config.deb && \
     apt update && \
-    apt install -y --no-install-recommends mysql-client; \
+    apt install -y --no-install-recommends --allow-unauthenticated mysql-client; \
 fi;
 
 
