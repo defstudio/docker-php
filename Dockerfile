@@ -59,7 +59,7 @@ ARG ENABLE_BACKUP_TOOLS=0
 
 RUN if [ ${ENABLE_BACKUP_TOOLS} = 1 ] ; then \
     apt update && \
-    apt install -y --no-install-recommends mysql-client; \
+    apt install -y --no-install-recommends mariadb-client; \
 fi;
 
 
