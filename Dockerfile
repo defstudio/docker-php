@@ -2,6 +2,11 @@ ARG PHP_VERSION
 
 FROM php:${PHP_VERSION}-fpm-bullseye as base_php
 
+ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS="0" \
+    PHP_OPCACHE_MAX_ACCELERATED_FILES="10000" \
+    PHP_OPCACHE_MEMORY_CONSUMPTION="192" \
+    PHP_OPCACHE_MAX_WASTED_PERCENTAGE="10" 
+
 RUN apt-get update && \
     apt-get install -y --no-install-recommends procps && \
     apt-get install -y --no-install-recommends curl && \
@@ -70,12 +75,16 @@ RUN docker-php-ext-install pdo_mysql && \
     docker-php-ext-install calendar && \
     docker-php-ext-install intl && \
     docker-php-ext-install gettext && \
-    docker-php-ext-install exif
+    docker-php-ext-install exif 
+
+RUN if [ ${ENABLE_OPCACHE} = 1 ] ; then \
+    docker-php-ext-install opcache \
+fi;
 
 RUN if [ "${PHP_VERSION}" = "5.6.40" ] ; then \
         echo 'no config' ; \
     else \
-        pecl install -o -f redis && \ 
+        pecl install -o -f redis && \
         rm -rf /tmp/pear && \
         docker-php-ext-enable redis ; \
     fi;
@@ -100,6 +109,7 @@ RUN mkdir -p /.config/psysh && chmod -R 777 /.config/psysh
 
 COPY php-production.ini "$PHP_INI_DIR/php.ini-production"
 COPY php-development.ini "$PHP_INI_DIR/php.ini-development"
+COPY opcache.ini "$PHP_INI_DIR/opcache.ini"
 
 ARG PRODUCTION=0
 RUN if [ ${PRODUCTION} = 1 ] ; then \
