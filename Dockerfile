@@ -105,7 +105,7 @@ RUN mkdir -p /.config/psysh && chmod -R 777 /.config/psysh
 
 COPY php-production.ini "$PHP_INI_DIR/php.ini-production"
 COPY php-development.ini "$PHP_INI_DIR/php.ini-development"
-COPY opcache.ini "$PHP_INI_DIR/opcache.ini"
+COPY opcache.ini "$PHP_INI_DIR/conf.d/opcache.ini"
 
 ARG PRODUCTION=0
 RUN if [ ${PRODUCTION} = 1 ] ; then \
