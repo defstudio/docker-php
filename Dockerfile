@@ -7,6 +7,8 @@ ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS="0" \
     PHP_OPCACHE_MEMORY_CONSUMPTION="512" \
     PHP_OPCACHE_MAX_WASTED_PERCENTAGE="10" 
 
+RUN apt-key list
+
 RUN apt-get update && \
     apt-get install -y --no-install-recommends procps && \
     apt-get install -y --no-install-recommends curl && \
