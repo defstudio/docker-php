@@ -73,12 +73,6 @@ RUN docker-php-ext-install pdo_mysql && \
     docker-php-ext-install exif 
 
 
-ARG ENABLE_OPCACHE=0
-RUN if [ ${ENABLE_OPCACHE} = 1 ] ; then \
-    wget -O /usr/bin/cachetool.phar  https://github.com/gordalina/cachetool/releases/latest/download/cachetool.phar && \
-    chmod +x /usr/bin/cachetool.phar && \
-    docker-php-ext-install opcache; \
-fi;
 
 RUN if [ "${PHP_VERSION}" = "5.6.40" ] ; then \
         echo 'no config' ; \
@@ -108,7 +102,16 @@ RUN mkdir -p /.config/psysh && chmod -R 777 /.config/psysh
 
 COPY php-production.ini "$PHP_INI_DIR/php.ini-production"
 COPY php-development.ini "$PHP_INI_DIR/php.ini-development"
-COPY opcache.ini "$PHP_INI_DIR/conf.d/opcache.ini"
+COPY opcache.ini "$PHP_INI_DIR/opcache.ini"
+
+ARG ENABLE_OPCACHE=0
+RUN if [ ${ENABLE_OPCACHE} = 1 ] ; then \
+    wget -O /usr/bin/cachetool.phar  https://github.com/gordalina/cachetool/releases/latest/download/cachetool.phar && \
+    chmod +x /usr/bin/cachetool.phar && \
+    docker-php-ext-install opcache && \
+    mv "$PHP_INI_DIR/opcache.ini" "$PHP_INI_DIR/conf.d/opcache.ini"; \
+fi;
+
 
 ARG PRODUCTION=0
 RUN if [ ${PRODUCTION} = 1 ] ; then \
