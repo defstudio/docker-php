@@ -75,6 +75,7 @@ RUN docker-php-ext-install pdo_mysql && \
 
 ARG ENABLE_OPCACHE=0
 RUN if [ ${ENABLE_OPCACHE} = 1 ] ; then \
+    echo "enabling opcache" && \
     wget -O /usr/bin/cachetool.phar  https://github.com/gordalina/cachetool/releases/latest/download/cachetool.phar && \
     chmod +x /usr/bin/cachetool.phar && \
     docker-php-ext-install opcache; \
