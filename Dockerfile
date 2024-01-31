@@ -70,6 +70,7 @@ RUN docker-php-ext-install pdo_mysql && \
     docker-php-ext-install calendar && \
     docker-php-ext-install intl && \
     docker-php-ext-install gettext && \
+    docker-php-ext-install bcmath && \
     docker-php-ext-install exif 
 
 
