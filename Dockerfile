@@ -74,7 +74,7 @@ RUN docker-php-ext-install pdo_mysql && \
     docker-php-ext-install bcmath && \
     docker-php-ext-install exif 
 
-RUN pecl install yaml-2.0.0 && docker-php-ext-enable yaml
+RUN pecl install yaml && echo "extension=yaml.so" > /usr/local/etc/php/conf.d/ext-yaml.ini && docker-php-ext-enable yaml
 
 
 RUN if [ "${PHP_VERSION}" = "5.6.40" ] ; then \
