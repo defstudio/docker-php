@@ -33,7 +33,6 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends libxext6 && \
     apt-get install -y --no-install-recommends sqlite3 && \
     apt-get install -y --no-install-recommends lsb-release && \
-    apt-get install -y --no-install-recommends ftp && \
     apt-get install -y --no-install-recommends libnss3      
 
 RUN if [ "${PHP_VERSION}" = "7.2.14" ] ; then \
@@ -73,6 +72,7 @@ RUN docker-php-ext-install pdo_mysql && \
     docker-php-ext-install intl && \
     docker-php-ext-install gettext && \
     docker-php-ext-install bcmath && \
+    docker-php-ext-install ftp && \
     docker-php-ext-install exif 
 
 RUN pecl install yaml && echo "extension=yaml.so" > /usr/local/etc/php/conf.d/ext-yaml.ini && docker-php-ext-enable yaml
