@@ -33,6 +33,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends libxext6 && \
     apt-get install -y --no-install-recommends sqlite3 && \
     apt-get install -y --no-install-recommends lsb-release && \
+    apt-get install -y --no-install-recommends ftp && \
     apt-get install -y --no-install-recommends libnss3      
 
 RUN if [ "${PHP_VERSION}" = "7.2.14" ] ; then \
