@@ -33,6 +33,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends libxext6 && \
     apt-get install -y --no-install-recommends sqlite3 && \
     apt-get install -y --no-install-recommends lsb-release && \
+    apt-get install -y --no-install-recommends libmagickwand-dev && \
     apt-get install -y --no-install-recommends libnss3      
 
 RUN if [ "${PHP_VERSION}" = "7.2.14" ] ; then \
@@ -76,6 +77,8 @@ RUN docker-php-ext-install pdo_mysql && \
     docker-php-ext-install exif 
 
 RUN pecl install yaml && echo "extension=yaml.so" > /usr/local/etc/php/conf.d/ext-yaml.ini && docker-php-ext-enable yaml
+
+RUN pecl install imagick && docker-php-ext-enable imagick;
 
 
 RUN if [ "${PHP_VERSION}" = "5.6.40" ] ; then \
