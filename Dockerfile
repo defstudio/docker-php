@@ -78,7 +78,8 @@ RUN docker-php-ext-install pdo_mysql && \
 
 RUN pecl install yaml && echo "extension=yaml.so" > /usr/local/etc/php/conf.d/ext-yaml.ini && docker-php-ext-enable yaml
 
-RUN pecl install imagick && \
+RUN pecl install -o -f imagick && \
+    rm -rf /tmp/pear && \
     docker-php-ext-enable imagick;
 
 
