@@ -224,8 +224,8 @@ RUN if [ ${ENABLE_XDEBUG} = 1 ] ; then \
     fi;
 
 
-RUN addgroup --group 1000 user && \
-    adduser -D -u 1000 -G `getent group 1000 | cut -d: -f1` user
+RUN addgroup --gid 1000 user && \
+    adduser -D --uid 1000 -G 1000 user
 
 USER user
 
