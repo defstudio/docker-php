@@ -227,8 +227,6 @@ RUN if [ ${ENABLE_XDEBUG} = 1 ] ; then \
 RUN addgroup --gid 1000 user && \
     adduser --disabled-password --uid 1000 --group 1000 user
 
-USER user
-
 
 FROM base_php as websocket
 COPY ./scripts/start_websocket.sh /usr/local/bin/start
