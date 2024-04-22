@@ -10,6 +10,7 @@ ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS="0" \
 RUN apt-get update && \
     apt-get install -y --no-install-recommends procps && \
     apt-get install -y --no-install-recommends curl && \
+    apt-get install -y --no-install-recommends openssh-client && \
     apt-get install -y --no-install-recommends wget && \
     apt-get install -y --no-install-recommends iputils-ping && \
     apt-get install -y --no-install-recommends libmemcached-dev && \
