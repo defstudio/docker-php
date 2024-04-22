@@ -223,7 +223,8 @@ RUN if [ ${ENABLE_XDEBUG} = 1 ] ; then \
         fi; \
     fi;
 
-
+RUN addgroup -g 1000 user || true && \
+    adduser -D -u 1000 -G `getent group ${PGID} | cut -d: -f1` ${USER} || true
 
 
 
