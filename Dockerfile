@@ -225,7 +225,7 @@ RUN if [ ${ENABLE_XDEBUG} = 1 ] ; then \
 
 
 RUN addgroup --gid 1000 user && \
-    adduser -D --uid 1000 -G 1000 user
+    adduser --disabled-password --uid 1000 --group 1000 user
 
 USER user
 
