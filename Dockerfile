@@ -141,6 +141,9 @@ RUN if [ ${PRODUCTION} = 1 ] ; then \
            sed -e 's/pm\.max_children = 5/pm\.max_children = 50/' -i "/usr/local/etc/php-fpm.d/www.conf" ; \
         fi; \
     fi;
+
+RUN addgroup --gid 1000 user && \
+adduser --disabled-password -gid 1000  -u 1000 user
     
 
 
@@ -222,10 +225,6 @@ RUN if [ ${ENABLE_XDEBUG} = 1 ] ; then \
             docker-php-ext-enable xdebug ;\
         fi; \
     fi;
-
-
-RUN addgroup --gid 1000 user && \
-    adduser --disabled-password -gid 1000  -u 1000 user
 
 
 FROM base_php as websocket
