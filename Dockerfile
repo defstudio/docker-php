@@ -86,8 +86,8 @@ RUN install-php-extensions imagick/imagick@master && \
     rm -rf /tmp/pear && \
     docker-php-ext-enable imagick;
 
-RUN pecl install memcache && \
-    docker-php-ext-enable memcache;
+RUN pecl install memcached && \
+    docker-php-ext-enable memcached;
 
 
 RUN if [ "${PHP_VERSION}" = "5.6.40" ] ; then \
