@@ -7,6 +7,9 @@ ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS="0" \
     PHP_OPCACHE_MEMORY_CONSUMPTION="512" \
     PHP_OPCACHE_MAX_WASTED_PERCENTAGE="10" 
 
+ADD --chmod=0755 https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+
+
 RUN apt-get update && \
     apt-get install -y --no-install-recommends procps && \
     apt-get install -y --no-install-recommends curl && \
