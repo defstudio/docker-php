@@ -268,7 +268,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN mkdir -p /.composer/cache && chmod -R 777 /.composer/cache
 RUN pecl install pcov && docker-php-ext-enable pcov ;
 
-RUN apt-get update && apt-get install -y node npm
+RUN apt-get update && apt-get install -y nodejs npm
 
 
 
