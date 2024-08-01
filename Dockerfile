@@ -267,8 +267,8 @@ FROM base_php as composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN mkdir -p /.composer/cache && chmod -R 777 /.composer/cache
 RUN pecl install pcov && docker-php-ext-enable pcov ;
-
-
+COPY --from=node:20 /usr/local/ /usr/local/
+ENV PATH="/usr/local/bin:${PATH}"
 
 FROM composer as tester
 RUN apt -y install curl gnupg
