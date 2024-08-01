@@ -266,8 +266,13 @@ CMD ["/usr/local/bin/start"]
 FROM base_php as composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN mkdir -p /.composer/cache && chmod -R 777 /.composer/cache
-RUN pecl install pcov && docker-php-ext-enable pcov ;
-RUN apt-get update && apt-get -y install nodejs npm
+RUN pecl install pcov && docker-php-ext-enable pcov
+
+RUN apt-get update; apt-get install curl gpg -y; \
+mkdir -p /etc/apt/keyrings; \
+curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg; \
+echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list; \
+ apt-get update && apt-get install -y nodejs;
 
 
 FROM composer as tester
