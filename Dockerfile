@@ -272,7 +272,7 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | b
 RUN . "/root/.nvm/nvm.sh" && nvm install lts/iron
 RUN . "/root/.nvm/nvm.sh" && nvm use v20
 RUN . "/root/.nvm/nvm.sh" && nvm alias default v20
-ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
+ENV PATH="/root/.nvm/versions/node/v20/bin/:${PATH}"
 RUN node --version
 RUN npm --version
 
