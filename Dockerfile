@@ -271,6 +271,7 @@ RUN pecl install pcov && docker-php-ext-enable pcov ;
 RUN mkdir /.nvm
 ENV NVM_DIR=/.nvm
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+RUN chmod 777 /.nvm
 RUN . "$NVM_DIR/nvm.sh" && nvm install lts/iron
 RUN . "$NVM_DIR/nvm.sh" && nvm use v20
 RUN . "$NVM_DIR/nvm.sh" && nvm alias default v20
