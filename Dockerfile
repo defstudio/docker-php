@@ -268,12 +268,12 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN mkdir -p /.composer/cache && chmod -R 777 /.composer/cache
 RUN pecl install pcov && docker-php-ext-enable pcov ;
 
+ENV NVM_DIR=/home/user/.nvm
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
-RUN . "/root/.nvm/nvm.sh" && nvm install lts/iron
-RUN . "/root/.nvm/nvm.sh" && nvm use v20
-RUN . "/root/.nvm/nvm.sh" && nvm alias default v20
-RUN echo $(ls -la /root/.nvm)
-ENV PATH="/root/.nvm/versions/node/v20/bin/:${PATH}"
+RUN . "/home/user/.nvm/nvm.sh" && nvm install lts/iron
+RUN . "/home/user/.nvm/nvm.sh" && nvm use v20
+RUN . "/home/user/.nvm/nvm.sh" && nvm alias default v20
+ENV PATH="/home/user/.nvm/versions/node/v20/bin/:${PATH}"
 RUN node --version
 RUN npm --version
 
