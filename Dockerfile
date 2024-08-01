@@ -269,6 +269,7 @@ RUN mkdir -p /.composer/cache && chmod -R 777 /.composer/cache
 RUN pecl install pcov && docker-php-ext-enable pcov ;
 
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+RUN nvm install lts/iron
 
 
 
