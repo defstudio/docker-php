@@ -1,6 +1,6 @@
 ARG PHP_VERSION
 
-FROM php:${PHP_VERSION}-fpm-bullseye as base_php
+FROM php:${PHP_VERSION}-fpm-bullseye AS base_php
 
 ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS="0" \
     PHP_OPCACHE_MAX_ACCELERATED_FILES="32531" \
@@ -154,7 +154,7 @@ adduser --disabled-password -gid 1000  -u 1000 user
     
 
 
-FROM base_php as fpm    
+FROM base_php AS fpm    
 
 ARG ENABLE_XDEBUG=0
 RUN if [ ${ENABLE_XDEBUG} = 1 ] ; then \
@@ -234,14 +234,14 @@ RUN if [ ${ENABLE_XDEBUG} = 1 ] ; then \
     fi;
 
 
-FROM base_php as websocket
+FROM base_php AS websocket
 COPY ./scripts/start_websocket.sh /usr/local/bin/start
 RUN chmod 777 /usr/local/bin/start
 CMD ["/usr/local/bin/start"]
 
 
 
-FROM base_php as worker
+FROM base_php AS worker
 COPY ./scripts/start_worker.sh /usr/local/bin/start
 RUN chmod 777 /usr/local/bin/start
 CMD ["/usr/local/bin/start"]
@@ -249,21 +249,21 @@ CMD ["/usr/local/bin/start"]
 
 
 
-FROM base_php as pulse
+FROM base_php AS pulse
 COPY ./scripts/start_pulse.sh /usr/local/bin/start
 RUN chmod 777 /usr/local/bin/start
 CMD ["/usr/local/bin/start"]
 
 
 
-FROM base_php as scheduler
+FROM base_php AS scheduler
 COPY ./scripts/start_schedule.sh /usr/local/bin/start
 RUN chmod 777 /usr/local/bin/start
 CMD ["/usr/local/bin/start"]
 
 
 
-FROM base_php as composer
+FROM base_php AS composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN mkdir -p /.composer/cache && chmod -R 777 /.composer/cache
 RUN pecl install pcov && docker-php-ext-enable pcov
@@ -275,7 +275,7 @@ echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.co
  apt-get update && apt-get install -y nodejs;
 
 
-FROM composer as tester
+FROM composer AS tester
 RUN apt -y install curl gnupg
 RUN curl -sL https://deb.nodesource.com/setup_14.x  | bash -
 RUN apt -y install nodejs
