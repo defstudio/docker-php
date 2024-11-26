@@ -218,8 +218,6 @@ RUN if [ ${ENABLE_XDEBUG} = 1 ] ; then \
             echo "xdebug.log_level=0" >> /usr/local/etc/php/conf.d/xdebug.ini && \
             docker-php-ext-enable xdebug ;\
         else \
-            pecl install pcov && \
-            docker-php-ext-enable pcov && \
             pecl install xdebug && \
             echo "zend_extension=xdebug" > /usr/local/etc/php/conf.d/xdebug.ini && \
             echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/xdebug.ini && \
