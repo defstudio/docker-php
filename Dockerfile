@@ -262,8 +262,11 @@ CMD ["/usr/local/bin/start"]
 
 
 FROM base_php AS composer
+
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-RUN mkdir -p /home/user/.composer/cache && chmod -R 777 /home/user/.composer/cache
+RUN mkdir -p /home/user/.composer/cache && \
+    chmod -R 777 /home/user/.composer/cache && \
+    chown -R user:user /home/user/.composer
 
 # Pcov disabled, project seems unmaintained
 # RUN pecl install pcov && docker-php-ext-enable pcov
