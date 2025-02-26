@@ -277,7 +277,8 @@ RUN apt-get update; apt-get install curl gpg -y; \
     echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list; \
     apt-get update && apt-get install -y nodejs;
     
-RUN mkdir /home/user/.ssh && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> /home/user/.ssh/config
+RUN mkdir /home/user/.ssh
+RUN echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> /home/user/.ssh/config
 
 
 FROM composer AS tester
