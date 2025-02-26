@@ -272,14 +272,15 @@ RUN mkdir -p /home/user/.composer/cache && \
 # RUN pecl install pcov && docker-php-ext-enable pcov
 
 RUN apt-get update; apt-get install curl gpg -y; \
-mkdir -p /etc/apt/keyrings; \
-curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg; \
-echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list; \
- apt-get update && apt-get install -y nodejs;
+    mkdir -p /etc/apt/keyrings; \
+    curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg; \
+    echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list; \
+    apt-get update && apt-get install -y nodejs; \
+    
+RUN mkdir /home/user/.ssh && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> /home/user/.ssh/config
 
 
 FROM composer AS tester
 RUN apt -y install curl gnupg
 RUN curl -sL https://deb.nodesource.com/setup_14.x  | bash -
 RUN apt -y install nodejs
-RUN mkdir /home/user/.ssh && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> /home/user/.ssh/config
