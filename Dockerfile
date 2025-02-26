@@ -282,4 +282,4 @@ FROM composer AS tester
 RUN apt -y install curl gnupg
 RUN curl -sL https://deb.nodesource.com/setup_14.x  | bash -
 RUN apt -y install nodejs
-RUN echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+RUN mkdir /home/user/.ssh && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> /home/user/.ssh/config
