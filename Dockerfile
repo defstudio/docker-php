@@ -54,7 +54,7 @@ ARG NODE_VERSION=0
 RUN if [ "${NODE_VERSION}" -ne 1 ] ; then \
     curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - && \
     apt-get install -y nodejs; \
-fi
+fi;
 
 
 ARG ENABLE_LIBREOFFICE_WRITER=0
