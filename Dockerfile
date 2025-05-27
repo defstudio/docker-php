@@ -50,6 +50,13 @@ RUN if [ "${PHP_VERSION}" = "7.2.14" ] ; then \
     fi;
 
 
+ARG NODE_VERSION=0
+RUN if [ ${NODE_VERSION} -ne 1 ] ; then \
+    curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - && \
+    apt-get install -y nodejs && \
+fi;
+
+
 ARG ENABLE_LIBREOFFICE_WRITER=0
 RUN if [ ${ENABLE_LIBREOFFICE_WRITER} = 1 ] ; then \
     mkdir -p /usr/share/man/man1 \
@@ -79,7 +86,7 @@ RUN docker-php-ext-install pdo_mysql && \
     docker-php-ext-install gettext && \
     docker-php-ext-install bcmath && \
     docker-php-ext-install ftp && \
-    docker-php-ext-install exif 
+    docker-php-ext-install exif
 
 RUN pecl install yaml && echo "extension=yaml.so" > /usr/local/etc/php/conf.d/ext-yaml.ini && docker-php-ext-enable yaml
 
