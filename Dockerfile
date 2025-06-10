@@ -53,7 +53,23 @@ RUN if [ "${PHP_VERSION}" = "7.2.14" ] ; then \
 ARG NODE_VERSION=0
 RUN if [ "${NODE_VERSION}" -ne "0" ] ; then \
     curl -sL "https://deb.nodesource.com/setup_$NODE_VERSION.x" | bash - && \
-    apt-get install -y nodejs; \
+    apt-get update && \
+    apt-get install -y --no-install-recommends \
+        nodejs \
+        libnss3 \
+        libnspr4 \
+        libatk1.0-0 \
+        libatk-bridge2.0-0 \
+        libcups2 \
+        libdrm2 \
+        libxkbcommon0 \
+        libxcomposite1 \
+        libxdamage1 \
+        libxfixes3 \
+        libxrandr2 \
+        libgbm1 \
+        libasound2 && \
+    rm -rf /var/lib/apt/lists/*; \
 fi;
 
 
