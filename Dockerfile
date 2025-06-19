@@ -276,6 +276,12 @@ RUN chmod 777 /usr/local/bin/start
 CMD ["/usr/local/bin/start"]
 
 
+FROM base_php AS nightwatch
+COPY ./scripts/start_nightwatch.sh /usr/local/bin/start
+RUN chmod 777 /usr/local/bin/start
+CMD ["/usr/local/bin/start"]
+
+
 
 FROM base_php AS scheduler
 COPY ./scripts/start_schedule.sh /usr/local/bin/start
