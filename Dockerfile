@@ -86,9 +86,9 @@ fi;
 
 ARG ENABLE_HEADLESS_CHROME=0
 RUN if [ ${ENABLE_HEADLESS_CHROME} = 1 ] ; then \
-    RUN apt-get update && apt-get install -y \
-        chromium chromium-driver \
-        && rm -rf /var/lib/apt/lists/* ; \
+    apt-get update \ 
+    && apt-get install -y --no-install-recommends chromium chromium-driver \
+    && rm -rf /var/lib/apt/lists/* ; \
 fi;
 
 
