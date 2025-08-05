@@ -84,6 +84,13 @@ RUN if [ ${ENABLE_LIBREOFFICE_WRITER} = 1 ] ; then \
     && apt install -y --no-install-recommends pandoc ; \
 fi;
 
+ARG ENABLE_HEADLESS_CHROME=0
+RUN if [ ${ENABLE_HEADLESS_CHROME} = 1 ] ; then \
+    RUN apt-get update && apt-get install -y \
+        chromium chromium-driver \
+        && rm -rf /var/lib/apt/lists/* ; \
+fi;
+
 
 ARG ENABLE_BACKUP_TOOLS=0
 RUN if [ ${ENABLE_BACKUP_TOOLS} = 1 ] ; then \
