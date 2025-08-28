@@ -92,6 +92,14 @@ RUN if [ ${ENABLE_HEADLESS_CHROME} = 1 ] ; then \
 fi;
 
 
+ARG ENABLE_RSYNC=0
+RUN if [ ${ENABLE_RSYNC} = 1 ] ; then \
+    apt-get update \ 
+    && apt-get install -y --no-install-recommends rsync \
+    && rm -rf /var/lib/apt/lists/* ; \
+fi;
+
+
 ARG ENABLE_BACKUP_TOOLS=0
 RUN if [ ${ENABLE_BACKUP_TOOLS} = 1 ] ; then \
     apt update && \
