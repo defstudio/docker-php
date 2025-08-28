@@ -189,6 +189,8 @@ RUN if [ ${PRODUCTION} = 1 ] ; then \
 
 RUN addgroup --gid 1000 user && \
 adduser --disabled-password -gid 1000  -u 1000 user
+
+RUN echo "StrictHostKeyChecking no" >> /etc/ssh/ssh_config
     
 
 
