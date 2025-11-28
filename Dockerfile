@@ -278,6 +278,11 @@ RUN chmod 777 /usr/local/bin/start
 CMD ["/usr/local/bin/start"]
 
 
+FROM base_php AS websockets-laravel
+COPY ./scripts/start_websockets_laravel.sh /usr/local/bin/start
+RUN chmod 777 /usr/local/bin/start
+CMD ["/usr/local/bin/start"]
+
 
 FROM base_php AS worker
 COPY ./scripts/start_worker.sh /usr/local/bin/start
