@@ -290,6 +290,16 @@ RUN chmod 777 /usr/local/bin/start
 CMD ["/usr/local/bin/start"]
 
 
+FROM base_php AS docker_worker
+USER root
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends docker.io ca-certificates \
+ && rm -rf /var/lib/apt/lists/*
+COPY ./scripts/start_worker.sh /usr/local/bin/start
+RUN chmod 777 /usr/local/bin/start
+CMD ["/usr/local/bin/start"]
+
+
 
 
 FROM base_php AS pulse
