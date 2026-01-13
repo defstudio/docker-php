@@ -258,7 +258,7 @@ RUN if [ ${ENABLE_XDEBUG} = 1 ] ; then \
             echo "xdebug.log_level=0" >> /usr/local/etc/php/conf.d/xdebug.ini && \
             docker-php-ext-enable xdebug ;\
         else \
-            pecl install xdebug-3.4.0beta1 && \
+            pecl install Xdebug 3.5.0 && \
             echo "zend_extension=xdebug" > /usr/local/etc/php/conf.d/xdebug.ini && \
             echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/xdebug.ini && \
             echo "xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/xdebug.ini && \
