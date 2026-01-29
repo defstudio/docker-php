@@ -102,8 +102,14 @@ fi;
 
 ARG ENABLE_BACKUP_TOOLS=0
 RUN if [ ${ENABLE_BACKUP_TOOLS} = 1 ] ; then \
-    apt update && \
-    apt install -y --no-install-recommends default-mysql-client; \
+    apt-get update && \
+    apt-get install -y wget gnupg && \
+    wget https://repo.mysql.com/mysql-apt-config_0.8.30-1_all.deb && \
+    echo "mysql-apt-config mysql-apt-config/select-server select mysql-8.4" | debconf-set-selections && \
+    DEBIAN_FRONTEND=noninteractive dpkg -i mysql-apt-config_0.8.30-1_all.deb && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends mysql-client && \
+    rm -rf /var/lib/apt/lists/* \
 fi;
 
 
