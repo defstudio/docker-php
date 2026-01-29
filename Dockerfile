@@ -109,7 +109,7 @@ RUN if [ ${ENABLE_BACKUP_TOOLS} = 1 ] ; then \
     DEBIAN_FRONTEND=noninteractive dpkg -i mysql-apt-config_0.8.30-1_all.deb && \
     apt-get update && \
     apt-get install -y --no-install-recommends mysql-client && \
-    rm -rf /var/lib/apt/lists/* \
+    rm -rf /var/lib/apt/lists/* ; \
 fi;
 
 
