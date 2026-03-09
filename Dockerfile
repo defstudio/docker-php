@@ -51,27 +51,40 @@ RUN if [ "${PHP_VERSION}" = "7.2.14" ] ; then \
 
 
 ARG NODE_VERSION=0
-RUN if [ "${NODE_VERSION}" -ne "0" ] ; then \
-    curl -sL "https://deb.nodesource.com/setup_$NODE_VERSION.x" | bash - && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends \
-        nodejs \
-        libnss3 \
-        libnspr4 \
-        libatk1.0-0 \
-        libatk-bridge2.0-0 \
-        libcups2 \
-        libdrm2 \
-        libxkbcommon0 \
-        libxcomposite1 \
-        libxdamage1 \
-        libxfixes3 \
-        libxrandr2 \
-        libgbm1 \
-        libasound2 && \
-    rm -rf /var/lib/apt/lists/*; \
-fi;
 
+RUN set -eux; \
+    if [ "$NODE_VERSION" != "0" ]; then \
+        apt-get update; \
+        apt-get install -y --no-install-recommends \
+            ca-certificates \
+            curl \
+            gnupg; \
+        rm -f /etc/apt/sources.list.d/nodesource.list; \
+        rm -f /etc/apt/keyrings/nodesource.gpg; \
+        rm -f /usr/share/keyrings/nodesource.gpg; \
+        mkdir -p /etc/apt/keyrings; \
+        curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key \
+            | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg; \
+        echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_${NODE_VERSION}.x nodistro main" \
+            > /etc/apt/sources.list.d/nodesource.list; \
+        apt-get update; \
+        apt-get install -y --no-install-recommends \
+            nodejs \
+            libnss3 \
+            libnspr4 \
+            libatk1.0-0 \
+            libatk-bridge2.0-0 \
+            libcups2 \
+            libdrm2 \
+            libxkbcommon0 \
+            libxcomposite1 \
+            libxdamage1 \
+            libxfixes3 \
+            libxrandr2 \
+            libgbm1 \
+            libasound2; \
+    fi; \
+    rm -rf /var/lib/apt/lists/*
 
 ARG ENABLE_LIBREOFFICE_WRITER=0
 RUN if [ ${ENABLE_LIBREOFFICE_WRITER} = 1 ] ; then \
