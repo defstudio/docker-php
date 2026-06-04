@@ -39,7 +39,8 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends sqlite3 && \
     apt-get install -y --no-install-recommends lsb-release && \
     apt-get install -y --no-install-recommends libmagickwand-dev && \
-    apt-get install -y --no-install-recommends libnss3      
+    apt-get install -y --no-install-recommends libnss3 \
+    apt-get install -y --no-install-recommends libpq-dev
 
 RUN if [ "${PHP_VERSION}" = "7.2.14" ] ; then \
         echo 'no config' ; \
@@ -82,7 +83,6 @@ RUN set -eux; \
             libxfixes3 \
             libxrandr2 \
             libgbm1 \
-            libpq-dev \
             libasound2; \
     fi; \
     rm -rf /var/lib/apt/lists/*
