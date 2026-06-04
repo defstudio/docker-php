@@ -82,6 +82,7 @@ RUN set -eux; \
             libxfixes3 \
             libxrandr2 \
             libgbm1 \
+            libpq-dev \
             libasound2; \
     fi; \
     rm -rf /var/lib/apt/lists/*
@@ -129,6 +130,7 @@ fi;
 
 
 RUN docker-php-ext-install pdo_mysql && \
+    docker-php-ext-install pdo_pgsql pgsql && \
     docker-php-ext-install mysqli && \
     docker-php-ext-install pcntl && \
     docker-php-ext-install zip && \
